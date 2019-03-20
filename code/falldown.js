@@ -53,6 +53,8 @@ class FallDown extends Events
             window.addEventListener('resize', FallDown.resize)
             window.addEventListener('scroll', FallDown.resize)
             window.addEventListener('keydown', FallDown.keydown)
+            document.body.addEventListener('mousedown', FallDown.cancel)
+            document.body.addEventListener('touchstart', FallDown.cancel)
             FallDown.setup = true
         }
         if (options.addCSS)
@@ -259,19 +261,32 @@ class FallDown extends Events
     {
         const width = window.innerWidth
         const height = window.innerHeight
-        const box = this.box.getBoundingClientRect()
+        let box = this.box.getBoundingClientRect()
         const selection = this.selected.getBoundingClientRect()
         this.box.style.maxHeight = 'unset'
-        if (selection.left + box.width > width)
+        if (selection.left >= width / 2)
         {
             this.box.style.right = 0
             this.box.style.left = 'unset'
+            box = this.box.getBoundingClientRect()
+            if (box.left < 0)
+            {
+                this.box.style.right = box.left + 'px'
+                this.box.style.left = 'unset'
+            }
         }
         else
         {
             this.box.style.left = 0
             this.box.style.right = 'unset'
+            box = this.box.getBoundingClientRect()
+            if (box.right >= width)
+            {
+                this.box.style.left = width - box.right + 'px'
+                this.box.style.right = 'unset'
+            }
         }
+
         if (selection.top + selection.height / 2 > height / 2)
         {
             this.box.style.bottom = this.selection.offsetHeight + 'px'
@@ -330,6 +345,20 @@ class FallDown extends Events
         }
         this.cursor = i
         this.box.childNodes[this.cursor].classList.add(this.options.classNames.cursor)
+        this.scrollIntoBoxView(this.box.childNodes[this.cursor])
+    }
+
+    scrollIntoBoxView(element)
+    {
+        const bounding = element.getBoundingClientRect()
+        if (bounding.top < 0)
+        {
+            this.box.scrollTop -= bounding.top
+        }
+        else if (bounding.bottom > window.innerHeight)
+        {
+            this.box.scrollTop -= window.innerHeight - bounding.bottom
+        }
     }
 
     clearCursor()
@@ -528,6 +557,7 @@ class FallDown extends Events
                 index = index >= this.box.childNodes.length ? index - this.box.childNodes.length : index
             }
             this.select(index)
+            this.box.childNodes[index].scrollIntoView()
         }
     }
 
