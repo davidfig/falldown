@@ -9,10 +9,11 @@
   "scripts": {
     "test": "budo docs/code.js:index.js --dir docs --live",
     "demo-index": "node docs/generate.js",
-    "demo-build": "browserify docs/code | babel-minify -o docs/index.js",
+    "demo-build": "browserify docs/code -o docs/index.js",
     "demo-css": "cp css/falldown.css docs/",
-    "demo": "yarn run docs-css && yarn run docs-index && yarn run docs-build",
-    "docs": "jsdoc -c .jsdoc.json"
+    "demo": "yarn run demo-css && yarn run demo-index && yarn run demo-build",
+    "docs": "jsdoc -c .jsdoc.json",
+    "prepublishOnly": "yarn run demo && yarn run docs"
   },
   "dependencies": {
     "clicked": "^2.1.1",
