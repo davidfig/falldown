@@ -95,16 +95,15 @@
         &lt;/div&gt;
     `;
     FallDown.load();
-   </pre></td></tr><tr><td class="demo demo-5"></td><td class="code"><pre>    new FallDown({
+   </pre></td></tr><tr><td class="demo demo-5"></td><td class="code"><pre>    const options = []
+    for (let i = 0; i &lt; 30; i++)
+    {
+        options.push('lots of options ' + i)
+    }
+    new FallDown({
         parent: document.querySelector('.demo-5'),
-        label: 'Multiple selection with no list:',
-        options: [
-            'options 1',
-            'options 2',
-            'options 3',
-            'options 4',
-            'options 5'
-        ],
+        label: 'Multiple selection without showing long list:',
+        options,
         selected: 'options 2',
         multiple: 'name',
         multipleName: ' opts'

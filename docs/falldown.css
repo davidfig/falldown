@@ -23,11 +23,12 @@
     border: 1px solid black;
     background: white;
     box-shadow: 0 0 0.25rem rgba(0,0,0,0.25);
-    padding: 0.5rem;
+    padding: 1rem;
     display: none;
     width: fit-content;
     white-space: nowrap;
     z-index: 2;
+    overflow: auto;
 }
 
 .falldown-select
@@ -40,6 +41,8 @@
 {
     margin-left: 1rem;
     display: inline-block;
+    user-select: none;
+    align-self: center;
 }
 
 .falldown-option
@@ -62,6 +65,7 @@
 {
     border: 1px dotted black;
     position: relative;
+    display: flex;
 }
 
 .falldown-selection:focus

@@ -59,7 +59,7 @@ async function generate()
             findContent()
         }
     }
-    await fs.writeJSON(path.join('code', 'styles.json'), css)
+    await fs.writeJSON(path.join('code', 'styles.json'), css, { overwrite: true })
     console.log('completed.')
     process.exit(0)
 }

@@ -14,9 +14,9 @@ class FallDown extends Events
      * @param {string} [options.separatorOptions=","] separator used to split attribute data-options from options.element
      * @param {object} [options.selected=''] default value
      * @param {string} [options.label] label for FallDown box
+     * @param {string} [options.minSize=longest] longest=size to largest option; otherwise use this as minWidth (e.g., '5rem')
      * @param {boolean} [options.allowEdit] can type entry
-     * @param {(boolean|string)} [options.multiple] allow multiple items to be selected - set this to "name" if you want to replace > 1 items with "2 items" on the selection
-     * @param {string} [options.multipleName] the words to use next to the count when options.multiple="name"
+     * @param {string} [options.multipleName] when set and more than 1 item is selected then text changes to "n items" where n is the number selected and items=multipleName
      * @param {string} [options.multipleSeparator=", "] when showing multiple options on the selector, use this to separate the options
      * @param {(object|boolean)} [options.arrow] change open and close arrows; set to false to remove
      * @param {string} [options.arrow.up=&#9652;]
@@ -51,7 +51,9 @@ class FallDown extends Events
         super()
         if (!FallDown.setup)
         {
-            window.addEventListener('keydown', e => FallDown.keydown(e))
+            window.addEventListener('resize', FallDown.resize)
+            window.addEventListener('scroll', FallDown.resize)
+            window.addEventListener('keydown', FallDown.keydown)
             FallDown.setup = true
         }
         if (options.addCSS)
@@ -117,17 +119,35 @@ class FallDown extends Events
                 this.selection.focus()
             }
         })
+        clicked(this.selection, () =>
+        {
+            if (!this.showing)
+            {
+                this.open()
+            }
+        })
         this.selection.addEventListener('focus', () => this.open())
         this.selection.addEventListener('blur', () => this.close())
         this.box.style.display = 'block'
-        let longest = 0
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        if (this.options.minSize === 'longest')
         {
-            const width = this.box.childNodes[i].offsetWidth
-            longest = width > longest ? width : longest
+            let longest = 0
+            for (let i = 0; i < this.box.childNodes.length; i++)
+            {
+                const width = this.box.childNodes[i].offsetWidth
+                longest = width > longest ? width : longest
+                this.selected.style.minWidth = longest + 'px'
+            }
+        }
+        else
+        {
+            this.selected.style.minWidth = this.options.minSize
+        }
+        if (!options.allowEdit)
+        {
+            this.selected.style.userSelect = 'none'
         }
         this.box.style.display = 'none'
-        this.selected.style.minWidth = longest + 'px'
     }
 
     /**
@@ -164,6 +184,7 @@ class FallDown extends Events
         options.label = options.label || element.getAttribute('data-label')
         options.multiple = options.multiple || element.getAttribute('data-multiple')
         options.arrow = typeof options.arrow === 'undefined' ? { up: '&#9652', down: '&#9662;' } : options.arrows
+        options.minSize = options.minSize || element.getAttribute('data-minsize') || 'longest'
         if (!options.classNames)
         {
             options.classNames = {}
@@ -222,20 +243,8 @@ class FallDown extends Events
     {
         if (!this.showing)
         {
-            const width = window.innerWidth
             this.box.style.display = 'block'
-            const box = this.box.getBoundingClientRect()
-            if (box.left + box.width > width)
-            {
-                this.box.style.right = 0
-                this.box.style.left = 'unset'
-            }
-            else
-            {
-                this.box.style.left = 0
-                this.box.style.right = 'unset'
-            }
-            this.box.style.top = this.selection.offsetHeight + 'px'
+            this.resizeBox()
             this.selection.classList.add(this.options.classNames.focus)
             if (this.options.arrow)
             {
@@ -244,6 +253,45 @@ class FallDown extends Events
             FallDown.active = this
             this.cursor = null
             this.showing = true
+        }
+    }
+
+    resizeBox()
+    {
+        const width = window.innerWidth
+        const height = window.innerHeight
+        const box = this.box.getBoundingClientRect()
+        const selection = this.selection.getBoundingClientRect()
+        this.box.style.maxHeight = 'unset'
+        if (selection.left + box.width > width)
+        {
+            this.box.style.right = 0
+            this.box.style.left = 'unset'
+        }
+        else
+        {
+            this.box.style.left = 0
+            this.box.style.right = 'unset'
+        }
+        if (selection.top + selection.height / 2 > height / 2)
+        {
+            this.box.style.bottom = this.selection.offsetHeight + 'px'
+            this.box.style.top = 'unset'
+            const box = this.box.getBoundingClientRect()
+            if (box.top < 0)
+            {
+                this.box.style.maxHeight = box.height + box.top - this.selection.offsetHeight / 2 + 'px'
+            }
+        }
+        else
+        {
+            this.box.style.top = this.selection.offsetHeight + 'px'
+            this.box.style.bottom = 'unset'
+            const box = this.box.getBoundingClientRect()
+            if (box.bottom > height)
+            {
+                this.box.style.maxHeight = box.height - (box.bottom - height) - this.selection.offsetHeight / 2 + 'px'
+            }
         }
     }
 
@@ -350,7 +398,7 @@ class FallDown extends Events
         }
         if (list.length > 1)
         {
-            if (this.options.multiple === 'name')
+            if (this.options.multipleName)
             {
                 this.selected.innerText = list.length + this.options.multipleName
             }
@@ -542,11 +590,20 @@ class FallDown extends Events
             new FallDown({ element: divs[i] })
         }
     }
+
+    static resize()
+    {
+        const active = FallDown.active
+        if (active && active.showing)
+        {
+            active.resizeBox()
+        }
+    }
 }
 
 module.exports = FallDown
 },{"./styles.json":2,"clicked":4,"eventemitter3":5}],2:[function(require,module,exports){
-module.exports={".falldown-main":{"display":"flex"},".falldown-main:focus":{},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"0.5rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"text-align":"right","margin-left":"1rem","display":"inline-block"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
+module.exports={".falldown-main":{"display":"flex"},".falldown-main:focus":{},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"1rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
 
 },{}],3:[function(require,module,exports){
 const FallDown = require('../code/falldown')
@@ -629,16 +686,15 @@ function demo()
     /** end-test */
 
     /** begin-test */
+    const options = []
+    for (let i = 0; i < 30; i++)
+    {
+        options.push('lots of options ' + i)
+    }
     new FallDown({
         parent: document.querySelector('.demo-5'),
-        label: 'Multiple selection with no list:',
-        options: [
-            'options 1',
-            'options 2',
-            'options 3',
-            'options 4',
-            'options 5'
-        ],
+        label: 'Multiple selection without showing long list:',
+        options,
         selected: 'options 2',
         multiple: 'name',
         multipleName: ' opts'

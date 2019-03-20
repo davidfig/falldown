@@ -78,16 +78,15 @@ function demo()
     /** end-test */
 
     /** begin-test */
+    const options = []
+    for (let i = 0; i < 30; i++)
+    {
+        options.push('lots of options ' + i)
+    }
     new FallDown({
         parent: document.querySelector('.demo-5'),
-        label: 'Multiple selection with no list:',
-        options: [
-            'options 1',
-            'options 2',
-            'options 3',
-            'options 4',
-            'options 5'
-        ],
+        label: 'Multiple selection without showing long list:',
+        options,
         selected: 'options 2',
         multiple: 'name',
         multipleName: ' opts'
