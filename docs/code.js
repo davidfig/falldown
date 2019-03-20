@@ -93,6 +93,21 @@ function demo()
         multipleName: ' opts'
     });
     /** end-test */
+
+    /** begin-test */
+    new FallDown({
+        parent: document.querySelector('.demo-6'),
+        label: 'No arrow, single selection:',
+        options: [
+            'blue',
+            'green',
+            'purple',
+            'yellow'
+        ],
+        arrow: false
+    });
+    /** end-test */
+
 }
 
 window.onload = demo

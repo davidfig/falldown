@@ -18,6 +18,9 @@ class FallDown extends Events
      * @param {(boolean|string)} [options.multiple] allow multiple items to be selected - set this to "name" if you want to replace > 1 items with "2 items" on the selection
      * @param {string} [options.multipleName] the words to use next to the count when options.multiple="name"
      * @param {string} [options.multipleSeparator=", "] when showing multiple options on the selector, use this to separate the options
+     * @param {(object|boolean)} [options.arrow] change open and close arrows; set to false to remove
+     * @param {string} [options.arrow.up=&#9652;]
+     * @param {string} [options.arrow.down=&#9662;]
      * @param {boolean} [options.addCSS] append styles directly to DOM instead of using stylesheet
      * @param {boolean} [options.addCSSClassName=falldown] change class names of added CSS styles (useful if you want multiple falldown boxes on same page with different styles)
      * @param {object} [options.styles] changes default styles if options.addCSS=true
@@ -25,6 +28,7 @@ class FallDown extends Events
      * @param {object} [options.styles.label]
      * @param {object} [options.styles.selection]
      * @param {object} [options.styles.selected]
+     * @param {object} [options.styles.arrow]
      * @param {object} [options.styles.box]
      * @param {object} [options.styles.select]
      * @param {object} [options.styles.option]
@@ -35,6 +39,7 @@ class FallDown extends Events
      * @param {string} [options.classNames.label=falldown-label]
      * @param {string} [options.classNames.selection=falldown-selection]
      * @param {string} [options.classNames.selected=falldown-selected]
+     * @param {string} [options.classNames.arrow=falldown-arrow]
      * @param {string} [options.classNames.box=falldown-box]
      * @param {string} [options.classNames.select=falldown-select]
      * @param {string} [options.classNames.option=falldown-option]
@@ -62,7 +67,9 @@ class FallDown extends Events
         this.setupOptions()
         this.element.classList.add(options.classNames.main)
         let s = `<div class="${options.classNames.label}">${options.label}</div>` +
-            `<div class="${options.classNames.selection}"><div class="${options.classNames.selected}">${options.selected}</div>` +
+            `<div class="${options.classNames.selection}">` +
+            `<div class="${options.classNames.selected}">${options.selected}</div>` +
+            (options.arrow ? `<div class="${options.classNames.arrow}">${options.arrow.down}</div>` : '') +
             `<div class="${options.classNames.box}">`
         for (let option of options.options)
         {
@@ -80,7 +87,8 @@ class FallDown extends Events
         this.selection = this.element.children[1]
         this.selection.setAttribute('tabindex', this.selection.getAttribute('tabindex') || 0)
         this.selected = this.selection.children[0]
-        this.box = this.selection.children[1]
+        this.arrow = this.element.querySelector('.' + options.classNames.arrow)
+        this.box = this.selection.children[options.arrow ? 2 : 1]
         if (options.parent)
         {
             options.parent.appendChild(this.element)
@@ -88,7 +96,7 @@ class FallDown extends Events
         const elements = this.box.querySelectorAll('.' + options.classNames.option)
         for (let i = 0; i < elements.length; i++)
         {
-            clicked(elements[i], e =>
+            clicked(elements[i], () =>
             {
                 this.emit('select', this.select(i))
                 if (this.options.multiple)
@@ -119,7 +127,7 @@ class FallDown extends Events
             longest = width > longest ? width : longest
         }
         this.box.style.display = 'none'
-        this.selection.style.minWidth = longest + 'px'
+        this.selected.style.minWidth = longest + 'px'
     }
 
     /**
@@ -155,6 +163,7 @@ class FallDown extends Events
         options.options = options.options || (dataOptions ? dataOptions.split(options.separatorOptions || ',') : [])
         options.label = options.label || element.getAttribute('data-label')
         options.multiple = options.multiple || element.getAttribute('data-multiple')
+        options.arrow = typeof options.arrow === 'undefined' ? { up: '&#9652', down: '&#9662;' } : options.arrows
         if (!options.classNames)
         {
             options.classNames = {}
@@ -165,6 +174,7 @@ class FallDown extends Events
         options.classNames.box = options.classNames.box || 'falldown-box'
         options.classNames.select = options.classNames.select || 'falldown-select'
         options.classNames.selected = options.classNames.selected || 'falldown-selected'
+        options.classNames.arrow = options.classNames.arrow || 'falldown-arrow'
         options.classNames.option = options.classNames.option || 'falldown-option'
         options.classNames.cursor = options.classNames.cursor || 'falldown-cursor'
         options.classNames.focus = options.classNames.focus || 'falldown-focus'
@@ -227,6 +237,10 @@ class FallDown extends Events
             }
             this.box.style.top = this.selection.offsetHeight + 'px'
             this.selection.classList.add(this.options.classNames.focus)
+            if (this.options.arrow)
+            {
+                this.arrow.innerHTML = this.options.arrow.up
+            }
             FallDown.active = this
             this.cursor = null
             this.showing = true
@@ -243,6 +257,10 @@ class FallDown extends Events
             this.clearCursor()
             this.box.style.display = 'none'
             this.selection.classList.remove(this.options.classNames.focus)
+            if (this.options.arrow)
+            {
+                this.arrow.innerHTML = this.options.arrow.down
+            }
             FallDown.active = null
             this.showing = false
         }
@@ -528,7 +546,7 @@ class FallDown extends Events
 
 module.exports = FallDown
 },{"./styles.json":2,"clicked":4,"eventemitter3":5}],2:[function(require,module,exports){
-module.exports={".falldown-main":{"display":"flex"},".falldown-main:focus":{},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"0.5rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2"},".falldown-select":{"color":"white","background":"black"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
+module.exports={".falldown-main":{"display":"flex"},".falldown-main:focus":{},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"0.5rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"text-align":"right","margin-left":"1rem","display":"inline-block"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
 
 },{}],3:[function(require,module,exports){
 const FallDown = require('../code/falldown')
@@ -626,6 +644,21 @@ function demo()
         multipleName: ' opts'
     });
     /** end-test */
+
+    /** begin-test */
+    new FallDown({
+        parent: document.querySelector('.demo-6'),
+        label: 'No arrow, single selection:',
+        options: [
+            'blue',
+            'green',
+            'purple',
+            'yellow'
+        ],
+        arrow: false
+    });
+    /** end-test */
+
 }
 
 window.onload = demo

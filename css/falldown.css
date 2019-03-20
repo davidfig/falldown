@@ -36,6 +36,12 @@
     background: black;
 }
 
+.falldown-arrow
+{
+    margin-left: 1rem;
+    display: inline-block;
+}
+
 .falldown-option
 {
     cursor: pointer;
@@ -45,6 +51,11 @@
 {
     background: rgba(0,0,0,0.5);
     color: white;
+}
+
+.falldown-selected
+{
+    display: inline-block;
 }
 
 .falldown-selection
