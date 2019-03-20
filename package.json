@@ -1,25 +1,29 @@
 {
   "name": "falldown",
-  "version": "0.1.0",
-  "description": "a vanilla javascript dropbox box replacement with no required external stylesheet",
-  "main": "index.js",
+  "version": "0.2.0",
+  "description": "a vanilla javascript dropdown box replacement without required external stylesheet",
+  "main": "dist/falldown.min.js",
   "repository": "https://github.com/davidfig/falldown",
   "author": "David Figatner <david@yopeyopey.com>",
   "license": "MIT",
   "scripts": {
     "test": "budo docs/code.js:index.js --dir docs --live",
+    "build-min": "uglifyjs dist/falldown.js -o dist/falldown.min.js",
+    "build-babel": "browserify code/falldown.js | babel -o dist/falldown.js",
+    "build": "yarn run build-babel && yarn run build-min",
     "demo-index": "node docs/generate.js",
     "demo-build": "browserify docs/code -o docs/index.js",
     "demo-css": "cp css/falldown.css docs/",
     "demo": "yarn run demo-css && yarn run demo-index && yarn run demo-build",
     "docs": "jsdoc -c .jsdoc.json",
-    "prepublishOnly": "yarn run demo && yarn run docs"
+    "prepublishOnly": "yarn run build && yarn run demo && yarn run docs"
   },
   "dependencies": {
     "clicked": "^2.1.1",
     "eventemitter3": "^3.1.0"
   },
   "devDependencies": {
+    "babel-preset-minify": "^0.5.0",
     "fs-extra": "^7.0.1",
     "yy-jsdoc-template": "^1.3.0"
   },
