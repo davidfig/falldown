@@ -244,12 +244,12 @@ class FallDown extends Events
         if (!this.showing)
         {
             this.box.style.display = 'block'
-            this.resizeBox()
             this.selection.classList.add(this.options.classNames.focus)
             if (this.options.arrow)
             {
                 this.arrow.innerHTML = this.options.arrow.up
             }
+            this.resizeBox()
             FallDown.active = this
             this.cursor = null
             this.showing = true
@@ -261,7 +261,7 @@ class FallDown extends Events
         const width = window.innerWidth
         const height = window.innerHeight
         const box = this.box.getBoundingClientRect()
-        const selection = this.selection.getBoundingClientRect()
+        const selection = this.selected.getBoundingClientRect()
         this.box.style.maxHeight = 'unset'
         if (selection.left + box.width > width)
         {
@@ -280,7 +280,9 @@ class FallDown extends Events
             const box = this.box.getBoundingClientRect()
             if (box.top < 0)
             {
-                this.box.style.maxHeight = box.height + box.top - this.selection.offsetHeight / 2 + 'px'
+                const style = window.getComputedStyle(this.box)
+                const spacing = parseFloat(style.marginLeft) + parseFloat(style.marginRight) + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth)
+                this.box.style.maxHeight = box.height + box.top - spacing + 'px'
             }
         }
         else
@@ -290,7 +292,9 @@ class FallDown extends Events
             const box = this.box.getBoundingClientRect()
             if (box.bottom > height)
             {
-                this.box.style.maxHeight = box.height - (box.bottom - height) - this.selection.offsetHeight / 2 + 'px'
+                const style = window.getComputedStyle(this.box)
+                const spacing = parseFloat(style.marginTop) + parseFloat(style.marginBottom) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth)
+                this.box.style.maxHeight = height - box.top - spacing + 'px'
             }
         }
     }
