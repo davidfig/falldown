@@ -1,4 +1,118 @@
-const clicked = require('clicked')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>falldown API Documentation</title>
+    
+    <meta name="description" content="Documentation for pixi-falldown library" />
+    
+        <meta name="keywords" content="docs, documentation, html5, javascript, jsdoc, drop-down, combo box, options, select, datalist" />
+        <meta name="keyword" content="docs, documentation, html5, javascript, jsdoc, drop-down, combo box, options, select, datalist" />
+    
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/main.css">
+
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true},"applicationName":"falldown","footer":"by YOPEY YOPEY LLC (yopeyopey.com)","copyright":"Copyright © 2019 YOPEY YOPEY LLC.","meta":{"title":"falldown API Documentation","description":"Documentation for pixi-falldown library","keyword":"docs, documentation, html5, javascript, jsdoc, drop-down, combo box, options, select, datalist"}};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">falldown</a></h3>
+    <button id="menuToggle" class="btn btn-link btn-lg menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </button>
+    <div class="search">
+        <input id="search" type="text" class="form-control input-md" placeholder="Search...">
+    </div>
+    <ul class="list">
+    
+        
+    
+        
+        <li class="item" data-name="FallDown">
+            <span class="title  ">
+                
+                <a href="FallDown.html">FallDown</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="FallDown#element"><a href="FallDown.html#element">element</a></li>
+            
+                <li class="parent " data-name="FallDown#showing"><a href="FallDown.html#showing">showing</a></li>
+            
+                <li class="parent " data-name="FallDown#value"><a href="FallDown.html#value">value</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="FallDown#clear"><a href="FallDown.html#clear">clear</a></li>
+            
+                <li class="parent  " data-name="FallDown#close"><a href="FallDown.html#close">close</a></li>
+            
+                <li class="parent  " data-name="FallDown#force"><a href="FallDown.html#force">force</a></li>
+            
+                <li class="parent  " data-name="FallDown#getIndex"><a href="FallDown.html#getIndex">getIndex</a></li>
+            
+                <li class="parent  " data-name="FallDown#open"><a href="FallDown.html#open">open</a></li>
+            
+                <li class="parent  " data-name="FallDown#remove"><a href="FallDown.html#remove">remove</a></li>
+            
+                <li class="parent  " data-name="FallDown#select"><a href="FallDown.html#select">select</a></li>
+            
+                <li class="parent  " data-name="FallDown#selectByName"><a href="FallDown.html#selectByName">selectByName</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        
+        <h1 class="page-title" data-filename="FallDown">Source: code/falldown.js</h1>
+        
+        
+
+
+    
+    <section>
+        <header>
+            <div class="header content-size">
+                <h2>code/falldown.js</h2>
+            </div>
+        </header>
+        <article>
+            <pre id="source-code" class="prettyprint source "><code>const clicked = require('clicked')
 const Events = require('eventemitter3')
 
 const STYLES = require('./styles.json')
@@ -60,14 +174,14 @@ class FallDown extends Events
         this.options = options
         this.setupOptions()
         this.element.classList.add(options.classNames.main)
-        let s = `<div class="${options.classNames.label}">${options.label}</div>` +
-            `<div class="${options.classNames.selection}"><div class="${options.classNames.selected}">${options.selected}</div>` +
-            `<div class="${options.classNames.box}">`
+        let s = `&lt;div class="${options.classNames.label}">${options.label}&lt;/div>` +
+            `&lt;div class="${options.classNames.selection}">&lt;div class="${options.classNames.selected}">${options.selected}&lt;/div>` +
+            `&lt;div class="${options.classNames.box}">`
         for (let option of options.options)
         {
-            s += `<div class="${options.classNames.option}${option === options.selected ? ` ${options.classNames.select}` : ''}">${option}</div>`
+            s += `&lt;div class="${options.classNames.option}${option === options.selected ? ` ${options.classNames.select}` : ''}">${option}&lt;/div>`
         }
-        s += '</div></div>'
+        s += '&lt;/div>&lt;/div>'
         this.element.innerHTML = s
 
         /**
@@ -85,7 +199,7 @@ class FallDown extends Events
             options.parent.appendChild(this.element)
         }
         const elements = this.box.querySelectorAll('.' + options.classNames.option)
-        for (let i = 0; i < elements.length; i++)
+        for (let i = 0; i &lt; elements.length; i++)
         {
             clicked(elements[i], e =>
             {
@@ -112,7 +226,7 @@ class FallDown extends Events
         this.selection.addEventListener('blur', () => this.close())
         this.box.style.display = 'block'
         let longest = 0
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i &lt; this.box.childNodes.length; i++)
         {
             const width = this.box.childNodes[i].offsetWidth
             longest = width > longest ? width : longest
@@ -130,7 +244,7 @@ class FallDown extends Events
         if (this.options.multiple)
         {
             const list = []
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i &lt; this.box.childNodes.length; i++)
             {
                 if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
                 {
@@ -278,7 +392,7 @@ class FallDown extends Events
     {
         if (this.data.multiple)
         {
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i &lt; this.box.childNodes.length; i++)
             {
                 if (input.indexOf(i) !== -1)
                 {
@@ -293,7 +407,7 @@ class FallDown extends Events
         }
         else
         {
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i &lt; this.box.childNodes.length; i++)
             {
                 if (this.box.childNodes.innerText === input)
                 {
@@ -322,7 +436,7 @@ class FallDown extends Events
     showSelection()
     {
         const list = []
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i &lt; this.box.childNodes.length; i++)
         {
             if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
             {
@@ -338,7 +452,7 @@ class FallDown extends Events
             else
             {
                 let s = ''
-                for (let i = 0; i < list.length - 1; i++)
+                for (let i = 0; i &lt; list.length - 1; i++)
                 {
                     s += list[i] + this.options.multipleSeparator || ', '
                 }
@@ -357,7 +471,7 @@ class FallDown extends Events
      */
     clear()
     {
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i &lt; this.box.childNodes.length; i++)
         {
             this.box.childNodes[i].classList.remove(this.options.classNames.select)
         }
@@ -369,7 +483,7 @@ class FallDown extends Events
      */
     selectByName(name)
     {
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i &lt; this.box.childNodes.length; i++)
         {
             if (this.box.childNodes[i].innerText === name)
             {
@@ -398,7 +512,7 @@ class FallDown extends Events
         }
         else
         {
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i &lt; this.box.childNodes.length; i++)
             {
                 if (i === index)
                 {
@@ -421,7 +535,7 @@ class FallDown extends Events
     getIndex()
     {
         const list = []
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i &lt; this.box.childNodes.length; i++)
         {
             if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
             {
@@ -454,7 +568,7 @@ class FallDown extends Events
             else
             {
                 index += delta
-                index = index < 0 ? this.box.childNodes.length + index : index
+                index = index &lt; 0 ? this.box.childNodes.length + index : index
                 index = index >= this.box.childNodes.length ? index - this.box.childNodes.length : index
             }
             this.select(index)
@@ -464,7 +578,7 @@ class FallDown extends Events
     static cancel()
     {
         const active = FallDown.active
-        if (active && active.showing)
+        if (active &amp;&amp; active.showing)
         {
             active.close()
         }
@@ -512,4 +626,25 @@ class FallDown extends Events
     }
 }
 
-module.exports = FallDown
+module.exports = FallDown</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer class="content-size">
+            <div class="footer">
+                Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 20 2019 09:59:49 GMT+0800 (GMT+08:00)
+            </div>
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
