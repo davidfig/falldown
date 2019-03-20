@@ -1,0 +1,10 @@
+{
+  "name": "falldown",
+  "version": "0.1.0",
+  "description": "a vanilla javascript dropbox box replacement with no required css",
+  "main": "index.js",
+  "repository": "https://github.com/davidfig/falldown",
+  "author": "David Figatner <david@yopeyopey.com>",
+  "license": "MIT",
+  "private": false
+}

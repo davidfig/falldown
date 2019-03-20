@@ -1,0 +1,36 @@
+Arguments: 
+  /usr/bin/node /usr/share/yarn/bin/yarn.js init
+
+PATH: 
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath_target_655303578:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/OpenSSH-Win64:/mnt/c/Program Files/dotnet:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit:/mnt/c/Program Files/nodejs:/mnt/c/Windows/System32/OpenSSH:/mnt/c/Program Files (x86)/GtkSharp/2.12/bin:/mnt/c/Program Files (x86)/Calibre2:/mnt/c/Users/dsfig/AppData/Local/Android/Sdk/tools:/mnt/c/Program Files/Amazon/AWSCLI/bin:/mnt/c/Users/dsfig/AppData/Local/Programs/Python/Python36-32/Scripts:/mnt/c/Users/dsfig/AppData/Local/Programs/Python/Python36-32:/mnt/c/Users/dsfig/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/dsfig/programming:/mnt/c/Users/dsfig/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/dsfig/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/dsfig/AppData/Roaming/npm:/mnt/c/Users/dsfig/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin:/usr/lib/jvm/java-11-oracle/bin:/usr/lib/jvm/java-11-oracle/db/bin:/home/sewcrates/.yarn/bin
+
+Yarn version: 
+  1.13.0
+
+Node version: 
+  10.15.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/share/yarn/lib/cli.js:125657:13)
+      at Interface.emit (events.js:189:13)
+      at Interface._ttyWrite (readline.js:783:16)
+      at ReadStream.onkeypress (readline.js:168:10)
+      at ReadStream.emit (events.js:189:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1022:36)
+      at ReadStream.emit (events.js:189:13)
+      at addChunk (_stream_readable.js:284:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
