@@ -6,5 +6,19 @@
   "repository": "https://github.com/davidfig/falldown",
   "author": "David Figatner <david@yopeyopey.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "budo docs/code.js:index.js --dir docs --live",
+    "docs-index": "node docs/generate.js",
+    "docs-build": "browserify docs/code | babel-minify -o docs/index.js",
+    "docs-css": "cp css/falldown.css docs/",
+    "docs": "yarn run docs-css && yarn run docs-index && yarn run docs-build"
+  },
+  "dependencies": {
+    "clicked": "^2.1.1",
+    "eventemitter3": "^3.1.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^7.0.1"
+  },
   "private": false
 }

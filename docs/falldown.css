@@ -1,0 +1,64 @@
+.falldown-main
+{
+    display: flex;
+}
+
+.falldown-main:focus
+{
+}
+
+.falldown-label, .falldown-selection
+{
+    cursor: pointer;
+}
+
+.falldown-label
+{
+    margin-right: 0.5em;
+}
+
+.falldown-box
+{
+    position: absolute;
+    border: 1px solid black;
+    background: white;
+    box-shadow: 0 0 0.25rem rgba(0,0,0,0.25);
+    padding: 0.5rem;
+    display: none;
+    width: fit-content;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.falldown-select
+{
+    color: white;
+    background: black;
+}
+
+.falldown-option
+{
+    cursor: pointer;
+}
+
+.falldown-option:hover, .falldown-cursor
+{
+    background: rgba(0,0,0,0.5);
+    color: white;
+}
+
+.falldown-selection
+{
+    border: 1px dotted black;
+    position: relative;
+}
+
+.falldown-selection:focus
+{
+    outline: none;
+}
+
+.falldown-focus
+{
+    border: 1px solid black;
+}
