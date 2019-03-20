@@ -340,7 +340,7 @@ class FallDown extends Events
                 let s = ''
                 for (let i = 0; i < list.length - 1; i++)
                 {
-                    s += list[i] + this.options.multipleSeparator || ', '
+                    s += list[i] + (this.options.multipleSeparator || ', ')
                 }
                 this.selected.innerText = s + list[list.length - 1]
             }
@@ -442,7 +442,7 @@ class FallDown extends Events
     {
         if (this.options.multiple)
         {
-            this.setCursor(this.cursor === null ? 0 : this.cursor + 1)
+            this.setCursor(this.cursor === null ? 0 : this.cursor + delta)
         }
         else
         {
@@ -508,6 +508,19 @@ class FallDown extends Events
                     e.preventDefault()
                     break
             }
+        }
+    }
+
+    /**
+     * load falldown on all elements with the proper className
+     * @param {string} className=falldown type convert
+     */
+    static load(className='falldown')
+    {
+        const divs = document.querySelectorAll('.' + className)
+        for (let i = 0; i < divs.length; i++)
+        {
+            new FallDown({ element: divs[i] })
         }
     }
 }

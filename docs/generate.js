@@ -6,6 +6,12 @@ const TEMPLATE_END = 'end-demo-code -->'
 const CODE_START = '/** begin-test */'
 const CODE_END = '/** end-test */'
 
+// from https://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
+function htmlEntities(str)
+{
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 async function generate()
 {
     const template = await fs.readFile(path.join('docs', 'index.template.html')) + ''
@@ -22,7 +28,7 @@ async function generate()
         {
             const end = demo.indexOf(CODE_END, index)
             s += `<tr><td class="demo demo-${count++}"></td>` +
-                `<td class="code"><pre>${demo.substring(find + CODE_START.length + 2, end - 1)}</pre></td></tr>`
+                `<td class="code"><pre>${htmlEntities(demo.substring(find + CODE_START.length + 2, end - 1))}</pre></td></tr>`
             index = end + CODE_END.length
         }
     }

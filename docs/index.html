@@ -43,7 +43,7 @@
         ],
         addCSS: true,
         addCSSClassName: 'demo-1'
-    })
+    });
    </pre></td></tr><tr><td class="demo demo-2"></td><td class="code"><pre>    new FallDown({
         parent: document.querySelector('.demo-2'),
         label: 'Single selection with styles:',
@@ -73,7 +73,7 @@
         },
         addCSS: true,
         addCSSClassName: 'demo-2'
-    })
+    });
    </pre></td></tr><tr><td class="demo demo-3"></td><td class="code"><pre>    new FallDown({
         parent: document.querySelector('.demo-3'),
         label: 'Single selection with stylesheet:',
@@ -85,7 +85,30 @@
             'options 5'
         ],
         selected: 'options 1'
-    })
+    });
+   </pre></td></tr><tr><td class="demo demo-4"></td><td class="code"><pre>    document.querySelector('.demo-4').innerHTML = `
+        &lt;div class=&quot;falldown&quot;
+            data-options=&quot;apple,pear,grapes,pineapple&quot;
+            data-selected=&quot;pineapple&quot;
+            data-label=&quot;Multiple selection using data-attributes&quot;
+            data-multiple=true&gt;
+        &lt;/div&gt;
+    `;
+    FallDown.load();
+   </pre></td></tr><tr><td class="demo demo-5"></td><td class="code"><pre>    new FallDown({
+        parent: document.querySelector('.demo-5'),
+        label: 'Multiple selection with no list:',
+        options: [
+            'options 1',
+            'options 2',
+            'options 3',
+            'options 4',
+            'options 5'
+        ],
+        selected: 'options 2',
+        multiple: 'name',
+        multipleName: ' opts'
+    });
    </pre></td></tr>
     </table>
     <script src="index.js"></script>

@@ -14,7 +14,7 @@ function demo()
         ],
         addCSS: true,
         addCSSClassName: 'demo-1'
-    })
+    });
     /** end-test */
 
     /** begin-test */
@@ -47,7 +47,7 @@ function demo()
         },
         addCSS: true,
         addCSSClassName: 'demo-2'
-    })
+    });
     /** end-test */
 
     /** begin-test */
@@ -62,7 +62,36 @@ function demo()
             'options 5'
         ],
         selected: 'options 1'
-    })
+    });
+    /** end-test */
+
+    /** begin-test */
+    document.querySelector('.demo-4').innerHTML = `
+        <div class="falldown"
+            data-options="apple,pear,grapes,pineapple"
+            data-selected="pineapple"
+            data-label="Multiple selection using data-attributes"
+            data-multiple=true>
+        </div>
+    `;
+    FallDown.load();
+    /** end-test */
+
+    /** begin-test */
+    new FallDown({
+        parent: document.querySelector('.demo-5'),
+        label: 'Multiple selection with no list:',
+        options: [
+            'options 1',
+            'options 2',
+            'options 3',
+            'options 4',
+            'options 5'
+        ],
+        selected: 'options 2',
+        multiple: 'name',
+        multipleName: ' opts'
+    });
     /** end-test */
 }
 
