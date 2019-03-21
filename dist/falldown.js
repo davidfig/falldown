@@ -53,7 +53,7 @@ class FallDown extends Events
             window.addEventListener('resize', FallDown.resize)
             window.addEventListener('scroll', FallDown.resize)
             window.addEventListener('keydown', FallDown.keydown)
-            document.body.addEventListener('mousedown', FallDown.cancel)
+            // document.body.addEventListener('mousedown', FallDown.cancel)
             document.body.addEventListener('touchstart', FallDown.cancel)
             FallDown.setup = true
         }
@@ -86,12 +86,12 @@ class FallDown extends Events
          * @type boolean
          */
         this.showing = false
-        this.label = this.element.children[0]
-        this.selection = this.element.children[1]
+        this.label = this.element.querySelector('.' + options.classNames.label)
+        this.selection = this.element.querySelector('.' + options.classNames.selection)
         this.selection.setAttribute('tabindex', this.selection.getAttribute('tabindex') || 0)
-        this.selected = this.selection.children[0]
+        this.selected = this.selection.querySelector('.' + options.classNames.selected)
         this.arrow = this.element.querySelector('.' + options.classNames.arrow)
-        this.box = this.selection.children[options.arrow ? 2 : 1]
+        this.box = this.selection.querySelector('.' + options.classNames.box)
         if (options.parent)
         {
             options.parent.appendChild(this.element)
@@ -184,6 +184,7 @@ class FallDown extends Events
         options.options = options.options || (dataOptions ? dataOptions.split(options.separatorOptions || ',') : [])
         options.label = options.label || element.getAttribute('data-label')
         options.multiple = options.multiple || element.getAttribute('data-multiple')
+        options.multipleName = options.multipleName || element.getAttribute('data-multiple-name')
         options.arrow = typeof options.arrow === 'undefined' ? { up: '&#9652', down: '&#9662;' } : options.arrows
         options.minSize = options.minSize || element.getAttribute('data-minsize') || 'longest'
         if (!options.classNames)
