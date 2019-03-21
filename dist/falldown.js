@@ -164,14 +164,14 @@ class FallDown extends Events
             {
                 if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
                 {
-                    list.push(this.box.childNodes[i].innerText)
+                    list.push(this.box.childNodes[i].innerHTML)
                 }
             }
             return list
         }
         else
         {
-            return this.selected.innerText
+            return this.selected.innerHTML
         }
     }
 
@@ -394,10 +394,10 @@ class FallDown extends Events
         {
             for (let i = 0; i < this.box.childNodes.length; i++)
             {
-                if (this.box.childNodes.innerText === input)
+                if (this.box.childNodes.innerHTML === input)
                 {
                     this.box.childNodes[i].classList.add(this.options.classNames.select)
-                    this.selection.innerText = input
+                    this.selection.innerHTML = input
                 }
                 else
                 {
@@ -425,14 +425,14 @@ class FallDown extends Events
         {
             if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
             {
-                list.push(this.box.childNodes[i].innerText)
+                list.push(this.box.childNodes[i].innerHTML)
             }
         }
         if (list.length > 1)
         {
             if (this.options.multipleName)
             {
-                this.selected.innerText = list.length + this.options.multipleName
+                this.selected.innerHTML = list.length + this.options.multipleName
             }
             else
             {
@@ -441,12 +441,12 @@ class FallDown extends Events
                 {
                     s += list[i] + (this.options.multipleSeparator || ', ')
                 }
-                this.selected.innerText = s + list[list.length - 1]
+                this.selected.innerHTML = s + list[list.length - 1]
             }
         }
         else
         {
-            this.selected.innerText = list[0]
+            this.selected.innerHTML = list[0]
         }
         return list
     }
@@ -470,7 +470,7 @@ class FallDown extends Events
     {
         for (let i = 0; i < this.box.childNodes.length; i++)
         {
-            if (this.box.childNodes[i].innerText === name)
+            if (this.box.childNodes[i].innerHTML === name)
             {
                 return this.select(i)
             }
@@ -509,7 +509,7 @@ class FallDown extends Events
                 }
             }
             this.showSelection()
-            return { changed: this.box.childNodes[index].innerText }
+            return { changed: this.box.childNodes[index].innerHTML }
         }
     }
 
