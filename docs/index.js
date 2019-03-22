@@ -10,9 +10,9 @@ class FallDown extends Events
      * @param {object} options
      * @param {HTMLElement} [options.element] use preexisting element for FallDown with optional data in attributes (provide either options.element or options.parent)
      * @param {HTMLElement} [options.parent] use thsi parent to create the FallDown (provide either options.element or options.parent)
-     * @param {string[]} [options.options] list of values for FallDown box
+     * @param {string[]|FallDownElement[]} [options.options] list of values for FallDown box
      * @param {string} [options.separatorOptions=","] separator used to split attribute data-options from options.element
-     * @param {object} [options.selected=''] default value
+     * @param {(string|string[]|FallDownElement[]|FallDownElement)} [options.selected=''] default value (may also be in the form of "item1,item2,item3" where ","=options.separatorOptions)
      * @param {string} [options.label] label for FallDown box
      * @param {string} [options.minSize=longest] longest=size to largest option; otherwise use this as minWidth (e.g., '5rem')
      * @param {boolean} [options.allowEdit] can type entry
@@ -54,7 +54,6 @@ class FallDown extends Events
             window.addEventListener('resize', FallDown.resize)
             window.addEventListener('scroll', FallDown.resize)
             window.addEventListener('keydown', FallDown.keydown)
-            // document.body.addEventListener('mousedown', FallDown.cancel)
             document.body.addEventListener('touchstart', FallDown.cancel)
             FallDown.setup = true
         }
@@ -75,9 +74,10 @@ class FallDown extends Events
             `<div class="${options.classNames.selected}">${options.selected}</div>` +
             (options.arrow ? `<div class="${options.classNames.arrow}">${options.arrow.down}</div>` : '') +
             `<div class="${options.classNames.box}">`
-        for (let option of options.options)
+        this.optionsToFallDownOptions(options)
+        for (let option of this.falldown)
         {
-            s += `<div class="${options.classNames.option}${option === options.selected ? ` ${options.classNames.select}` : ''}">${option}</div>`
+            s += `<div class="${options.classNames.option}${option.value === options.selected ? ` ${options.classNames.select}` : ''}">${option.html}</div>`
         }
         s += '</div></div>'
         this.element.innerHTML = s
@@ -152,27 +152,79 @@ class FallDown extends Events
         this.box.style.display = 'none'
     }
 
+    optionsToFallDownOptions(options)
+    {
+        /**
+         * list of items in falldown box
+         * @type {FallDownElement[]}
+         */
+        this.falldown = []
+        let selected = []
+        if (options.selected)
+        {
+            if (options.selected.indexOf(options.separatorOptions) !== -1)
+            {
+                selected = options.selected.split(options.separatorOptions)
+            }
+            else if (Array.isArray(options.selected))
+            {
+                if (typeof options.selected[0] === 'string' || !isNaN(options.selected[0]))
+                {
+                    selected = options.selected
+                }
+                else
+                {
+                    for (let item of options.selected)
+                    {
+                        selected.push(item.value)
+                    }
+                }
+            }
+            else if (typeof options.selected === 'string' || !isNaN(options.selected))
+            {
+                selected.push(options.selected)
+            }
+            else
+            {
+                selected.push(options.selected.value)
+            }
+        }
+        for (let i = 0; i < options.options.length; i++)
+        {
+            const option = options.options[i]
+            if (typeof option === 'string' || !isNaN(option))
+            {
+                this.falldown.push({ value: option, html: option, selected: selected.indexOf(option) !== -1 })
+            }
+            else
+            {
+                this.falldown.push(option)
+                option.selected = option.selected || selected.indexOf(option.value) !== -1
+            }
+        }
+    }
+
     /**
      * returns current value (or array of values)
      * @return (string|string[])
      */
     get value()
     {
+        const list = []
+        for (let item of this.falldown)
+        {
+            if (item.selected)
+            {
+                list.push(item.value)
+            }
+        }
         if (this.options.multiple)
         {
-            const list = []
-            for (let i = 0; i < this.box.childNodes.length; i++)
-            {
-                if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
-                {
-                    list.push(this.box.childNodes[i].innerHTML)
-                }
-            }
             return list
         }
         else
         {
-            return this.selected.innerHTML
+            return list[0]
         }
     }
 
@@ -350,6 +402,7 @@ class FallDown extends Events
         this.scrollIntoBoxView(this.box.childNodes[this.cursor])
     }
 
+    // TODO: does not work properly when scrolling up :(
     scrollIntoBoxView(element)
     {
         const bounding = element.getBoundingClientRect()
@@ -373,37 +426,41 @@ class FallDown extends Events
 
     /**
      * force selection of options based on value (clearing the remaining options)
-     * @param {(string|string[])} input to select
+     * @param {*} input or array of values to select
      */
     force(input)
     {
         if (this.data.multiple)
         {
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i < this.falldown.length; i++)
             {
                 if (input.indexOf(i) !== -1)
                 {
                     this.box.childNodes[i].classList.add(this.options.classNames.select)
+                    this.falldown[i].selected = true
                 }
                 else
                 {
                     this.box.childNodes[i].classList.remove(this.options.classNames.select)
+                    this.falldown[i].selected = false
                 }
             }
             this.showSelection()
         }
         else
         {
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i < this.falldown.length; i++)
             {
-                if (this.box.childNodes.innerHTML === input)
+                if (this.falldown[i].value === input)
                 {
                     this.box.childNodes[i].classList.add(this.options.classNames.select)
+                    this.falldown[i].selected = true
                     this.selection.innerHTML = input
                 }
                 else
                 {
                     this.box.childNodes[i].classList.remove(this.options.classNames.select)
+                    this.falldown[i].selected = false
                 }
             }
             this.showSelection()
@@ -417,17 +474,18 @@ class FallDown extends Events
     remove(index)
     {
         this.box.childNodes[index].classList.remove(this.options.classNames.select)
+        this.falldown[index].selected = false
         return this.showSelection()
     }
 
     showSelection()
     {
         const list = []
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i < this.falldown.length; i++)
         {
-            if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
+            if (this.falldown[i].selected)
             {
-                list.push(this.box.childNodes[i].innerHTML)
+                list.push(this.falldown[i].html)
             }
         }
         if (list.length > 1)
@@ -446,9 +504,13 @@ class FallDown extends Events
                 this.selected.innerHTML = s + list[list.length - 1]
             }
         }
-        else
+        else if (list.length === 1)
         {
             this.selected.innerHTML = list[0]
+        }
+        else
+        {
+            this.selected.innerHTML = ''
         }
         return list
     }
@@ -458,21 +520,23 @@ class FallDown extends Events
      */
     clear()
     {
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i < this.falldown.length; i++)
         {
             this.box.childNodes[i].classList.remove(this.options.classNames.select)
+            this.falldown[i].selected = false
         }
+        this.showSelection()
     }
 
     /**
-     * select option by name
+     * select option by HTML
      * @param {string} name
      */
-    selectByName(name)
+    selectByHTML(html)
     {
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i < this.falldown.length; i++)
         {
-            if (this.box.childNodes[i].innerHTML === name)
+            if (this.falldown.html === html)
             {
                 return this.select(i)
             }
@@ -491,7 +555,8 @@ class FallDown extends Events
         }
         if (this.options.multiple)
         {
-            const changed = this.box.childNodes[index]
+            const changed = this.falldown[index]
+            changed.selected = !changed.selected
             this.box.childNodes[index].classList.toggle(this.options.classNames.select)
             const list = this.showSelection()
             this.setCursor(index)
@@ -499,15 +564,17 @@ class FallDown extends Events
         }
         else
         {
-            for (let i = 0; i < this.box.childNodes.length; i++)
+            for (let i = 0; i < this.falldown.length; i++)
             {
                 if (i === index)
                 {
                     this.box.childNodes[i].classList.add(this.options.classNames.select)
+                    this.falldown[i].selected = true
                 }
                 else
                 {
                     this.box.childNodes[i].classList.remove(this.options.classNames.select)
+                    this.falldown[i].selected = false
                 }
             }
             this.showSelection()
@@ -522,9 +589,9 @@ class FallDown extends Events
     getIndex()
     {
         const list = []
-        for (let i = 0; i < this.box.childNodes.length; i++)
+        for (let i = 0; i < this.falldown.length; i++)
         {
-            if (this.box.childNodes[i].classList.contains(this.options.classNames.select))
+            if (this.falldown[i].selected)
             {
                 list.push(i)
             }
@@ -555,8 +622,8 @@ class FallDown extends Events
             else
             {
                 index += delta
-                index = index < 0 ? this.box.childNodes.length + index : index
-                index = index >= this.box.childNodes.length ? index - this.box.childNodes.length : index
+                index = index < 0 ? this.falldown.length + index : index
+                index = index >= this.falldown.length ? index - this.falldown.length : index
             }
             this.select(index)
             this.box.childNodes[index].scrollIntoView()
@@ -634,11 +701,17 @@ class FallDown extends Events
             active.resizeBox()
         }
     }
+
+    /**
+     * @typedef {Object} FallDownElement
+     * @property {*} value
+     * @property {string} html to display
+     */
 }
 
 module.exports = FallDown
 },{"./styles.json":2,"clicked":4,"eventemitter3":5}],2:[function(require,module,exports){
-module.exports={".falldown-main":{"display":"flex"},".falldown-main:focus":{},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"1rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
+module.exports={".falldown-main":{"display":"flex"},".falldown-main:focus":{},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"0.5rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block","white-space":"nowrap"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
 
 },{}],3:[function(require,module,exports){
 const FallDown = require('../code/falldown')

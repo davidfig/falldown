@@ -58,6 +58,8 @@
             
                 <li class="parent " data-name="FallDown#element"><a href="FallDown.html#element">element</a></li>
             
+                <li class="parent " data-name="FallDown#falldown"><a href="FallDown.html#falldown">falldown</a></li>
+            
                 <li class="parent " data-name="FallDown#showing"><a href="FallDown.html#showing">showing</a></li>
             
                 <li class="parent " data-name="FallDown#value"><a href="FallDown.html#value">value</a></li>
@@ -89,7 +91,7 @@
             
                 <li class="parent  " data-name="FallDown#select"><a href="FallDown.html#select">select</a></li>
             
-                <li class="parent  " data-name="FallDown#selectByName"><a href="FallDown.html#selectByName">selectByName</a></li>
+                <li class="parent  " data-name="FallDown#selectByHTML"><a href="FallDown.html#selectByHTML">selectByHTML</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -293,6 +295,9 @@
             
                 
 <span class="param-type">Array.&lt;string></span>
+|
+
+<span class="param-type">Array.&lt;FallDownElement></span>
 
 
             
@@ -362,7 +367,16 @@
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array.&lt;string></span>
+|
+
+<span class="param-type">Array.&lt;FallDownElement></span>
+|
+
+<span class="param-type">FallDownElement</span>
 
 
             
@@ -385,7 +399,7 @@
                         
                     
                 
-                <p>default value</p></td>
+                <p>default value (may also be in the form of &quot;item1,item2,item3&quot; where &quot;,&quot;=options.separatorOptions)</p></td>
         </tr>
 	
 	
@@ -1658,6 +1672,57 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="falldown">
+            <a class="share-icon" href="#falldown"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">falldown</span>
+            <span class="type-signature type">Array.&lt;FallDownElement></span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>list of items in falldown box</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="showing">
             <a class="share-icon" href="#showing"><span class="glyphicon glyphicon-link"></span></a>
             <span class="">showing</span>
@@ -1780,7 +1845,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line619">falldown.js:619</a>
+            <a href="code_falldown.js.html#line686">falldown.js:686</a>
         </div>
         
     </div>
@@ -1909,7 +1974,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line458">falldown.js:458</a>
+            <a href="code_falldown.js.html#line520">falldown.js:520</a>
         </div>
         
     </div>
@@ -1985,7 +2050,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line320">falldown.js:320</a>
+            <a href="code_falldown.js.html#line372">falldown.js:372</a>
         </div>
         
     </div>
@@ -2061,7 +2126,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line377">falldown.js:377</a>
+            <a href="code_falldown.js.html#line430">falldown.js:430</a>
         </div>
         
     </div>
@@ -2109,10 +2174,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
-|
-
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">*</span>
 
 
             
@@ -2122,7 +2184,7 @@
             
             <td class="description last">
                 
-                <p>to select</p></td>
+                <p>or array of values to select</p></td>
         </tr>
 	
 	
@@ -2185,7 +2247,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line521">falldown.js:521</a>
+            <a href="code_falldown.js.html#line588">falldown.js:588</a>
         </div>
         
     </div>
@@ -2270,7 +2332,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line244">falldown.js:244</a>
+            <a href="code_falldown.js.html#line296">falldown.js:296</a>
         </div>
         
     </div>
@@ -2346,7 +2408,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line416">falldown.js:416</a>
+            <a href="code_falldown.js.html#line473">falldown.js:473</a>
         </div>
         
     </div>
@@ -2467,7 +2529,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line485">falldown.js:485</a>
+            <a href="code_falldown.js.html#line549">falldown.js:549</a>
         </div>
         
     </div>
@@ -2574,10 +2636,10 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="selectByName">
-            <a class="share-icon" href="#selectByName"><span class="glyphicon glyphicon-link"></span></a>
+        <h4 class="name" id="selectByHTML">
+            <a class="share-icon" href="#selectByHTML"><span class="glyphicon glyphicon-link"></span></a>
             <span class="">
-                selectByName
+                selectByHTML
             </span>
             <span class="signature">(name)</span>
             
@@ -2588,7 +2650,7 @@
 
         
         <div class="tag-source">
-            <a href="code_falldown.js.html#line470">falldown.js:470</a>
+            <a href="code_falldown.js.html#line534">falldown.js:534</a>
         </div>
         
     </div>
@@ -2599,7 +2661,7 @@
 
     
     <div class="description">
-        <p>select option by name</p>
+        <p>select option by HTML</p>
     </div>
     
 
@@ -2711,7 +2773,7 @@
 
         <footer class="content-size">
             <div class="footer">
-                Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 22 2019 07:50:21 GMT+0800 (GMT+08:00)
+                Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 22 2019 10:01:42 GMT+0800 (GMT+08:00)
             </div>
         </footer>
     </div>

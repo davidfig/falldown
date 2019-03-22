@@ -151,11 +151,6 @@ class FallDown extends Events
         this.box.style.display = 'none'
     }
 
-    /**
-     * convert options.options to FallDownElement[]
-     * @param {object} options
-     * @private
-     */
     optionsToFallDownOptions(options)
     {
         /**
@@ -390,11 +385,6 @@ class FallDown extends Events
         }
     }
 
-    /**
-     * set cursor for multiple view
-     * @param {number} i
-     * @private
-     */
     setCursor(i)
     {
         this.clearCursor()
@@ -411,12 +401,7 @@ class FallDown extends Events
         this.scrollIntoBoxView(this.box.childNodes[this.cursor])
     }
 
-    /**
-     * ensure option is visible during keyboard scrolling
-     * @param {HTMLElement} element
-     * @private
-     * TODO: does not work properly when scrolling up :(
-     */
+    // TODO: does not work properly when scrolling up :(
     scrollIntoBoxView(element)
     {
         const bounding = element.getBoundingClientRect()
@@ -440,7 +425,7 @@ class FallDown extends Events
 
     /**
      * force selection of options based on value (clearing the remaining options)
-     * @param {(*|*[])} input to select
+     * @param {*} input or array of values to select
      */
     force(input)
     {
@@ -620,12 +605,6 @@ class FallDown extends Events
         }
     }
 
-    /**
-     * move up or down based on keyboard input
-     * @param {number} delta
-     * @param {number} unset index
-     * @private
-     */
     selectDelta(delta, unset)
     {
         if (this.options.multiple)
