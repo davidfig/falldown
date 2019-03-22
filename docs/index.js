@@ -71,13 +71,13 @@ class FallDown extends Events
         this.element.classList.add(options.classNames.main)
         let s = `<div class="${options.classNames.label}">${options.label}</div>` +
             `<div class="${options.classNames.selection}">` +
-            `<div class="${options.classNames.selected}">${options.selected}</div>` +
+            `<div class="${options.classNames.selected}"></div>` +
             (options.arrow ? `<div class="${options.classNames.arrow}">${options.arrow.down}</div>` : '') +
             `<div class="${options.classNames.box}">`
         this.optionsToFallDownOptions(options)
         for (let option of this.falldown)
         {
-            s += `<div class="${options.classNames.option}${option.value === options.selected ? ` ${options.classNames.select}` : ''}">${option.html}</div>`
+            s += `<div class="${options.classNames.option}${option.selected ? ` ${options.classNames.select}` : ''}">${option.html}</div>`
         }
         s += '</div></div>'
         this.element.innerHTML = s
@@ -149,6 +149,7 @@ class FallDown extends Events
         {
             this.selected.style.userSelect = 'none'
         }
+        this.showSelection()
         this.box.style.display = 'none'
     }
 
@@ -162,11 +163,7 @@ class FallDown extends Events
         let selected = []
         if (options.selected)
         {
-            if (options.selected.indexOf(options.separatorOptions) !== -1)
-            {
-                selected = options.selected.split(options.separatorOptions)
-            }
-            else if (Array.isArray(options.selected))
+            if (Array.isArray(options.selected))
             {
                 if (typeof options.selected[0] === 'string' || !isNaN(options.selected[0]))
                 {
@@ -182,7 +179,14 @@ class FallDown extends Events
             }
             else if (typeof options.selected === 'string' || !isNaN(options.selected))
             {
-                selected.push(options.selected)
+                if (options.selected.indexOf(options.separatorOptions) !== -1)
+                {
+                    selected = options.selected.split(options.separatorOptions)
+                }
+                else
+                {
+                    selected.push(options.selected)
+                }
             }
             else
             {
