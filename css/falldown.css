@@ -39,7 +39,7 @@
 
 .falldown-arrow
 {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     display: inline-block;
     user-select: none;
     align-self: center;
@@ -59,6 +59,7 @@
 .falldown-selected
 {
     display: inline-block;
+    white-space: nowrap;
 }
 
 .falldown-selection
