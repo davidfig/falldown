@@ -562,9 +562,9 @@ class FallDown extends Events
             const changed = this.falldown[index]
             changed.selected = !changed.selected
             this.box.childNodes[index].classList.toggle(this.options.classNames.select)
-            const list = this.showSelection()
+            this.showSelection()
             this.setCursor(index)
-            return { changed, list, active: FallDown.active }
+            return { changed, list: this.value, active: FallDown.active }
         }
         else
         {
@@ -582,7 +582,7 @@ class FallDown extends Events
                 }
             }
             this.showSelection()
-            return { changed: this.box.childNodes[index].innerHTML }
+            return { changed: this.falldown[index].value }
         }
     }
 
