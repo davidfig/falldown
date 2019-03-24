@@ -44,6 +44,7 @@ class FallDown extends Events
      * @param {string} [options.classNames.option=falldown-option]
      * @param {string} [options.classNames.cursor=falldown-cursor]
      * @param {string} [options.classNames.focus=falldown-focus]
+     * @fires select
      */
     constructor(options)
     {
@@ -745,12 +746,21 @@ class FallDown extends Events
             active.resizeBox()
         }
     }
-
-    /**
-     * @typedef {Object} FallDownElement
-     * @property {*} value
-     * @property {string} html to display
-     */
 }
+
+/**
+ * @typedef {Object} FallDown#FallDownElement
+ * @property {*} value
+ * @property {string} html to display
+ */
+
+/**
+ * fires when the selection of the falldown changes
+ * @event FallDown#select
+ * @type {object}
+ * @property {FallDownElement} changed
+ * @property {*} list - array of values (for option.multiple) or value of selected item
+ * @property {FallDown} active - FallDown element
+ */
 
 module.exports = FallDown
