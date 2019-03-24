@@ -45,6 +45,7 @@ class FallDown extends Events
      * @param {string} [options.classNames.option=falldown-option]
      * @param {string} [options.classNames.cursor=falldown-cursor]
      * @param {string} [options.classNames.focus=falldown-focus]
+     * @fires select
      */
     constructor(options)
     {
@@ -584,7 +585,7 @@ class FallDown extends Events
             this.box.childNodes[index].classList.toggle(this.options.classNames.select)
             this.showSelection()
             this.setCursor(index)
-            return { changed, list: this.value, active: FallDown.active }
+            return { changed, value: this.value, falldown: this }
         }
         else
         {
@@ -602,7 +603,7 @@ class FallDown extends Events
                 }
             }
             this.showSelection()
-            return { changed: this.falldown[index].value }
+            return { changed: this.falldown[index], value: this.value, falldown: this }
         }
     }
 
@@ -649,8 +650,8 @@ class FallDown extends Events
                 index = index < 0 ? this.falldown.length + index : index
                 index = index >= this.falldown.length ? index - this.falldown.length : index
             }
-            this.select(index)
             this.box.childNodes[index].scrollIntoView()
+            this.emit('select', this.select(index))
         }
     }
 
@@ -746,13 +747,22 @@ class FallDown extends Events
             active.resizeBox()
         }
     }
-
-    /**
-     * @typedef {Object} FallDownElement
-     * @property {*} value
-     * @property {string} html to display
-     */
 }
+
+/**
+ * @typedef {Object} FallDown#FallDownElement
+ * @property {*} value
+ * @property {string} html to display
+ */
+
+/**
+ * fires when the selection of the falldown changes
+ * @event FallDown#select
+ * @type {object}
+ * @property {FallDownElement} changed
+ * @property {*} value - array of values (for option.multiple) or value of selected item
+ * @property {FallDown} falldown - FallDown element
+ */
 
 module.exports = FallDown
 },{"./styles.json":2,"clicked":4,"eventemitter3":5}],2:[function(require,module,exports){
