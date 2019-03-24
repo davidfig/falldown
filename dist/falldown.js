@@ -115,27 +115,12 @@ class FallDown extends Events
         }
         this.cursor = null
         this.options = options
-        clicked(this.label, () => {
-            if (!this.showing)
-            {
-                this.open()
-            }
-            else
-            {
-                this.close()
-            }
-        })
-        clicked(this.selected, () =>
+        clicked(this.label, () => this.toggle())
+        if (this.arrow)
         {
-            if (!this.showing)
-            {
-                this.open()
-            }
-            else
-            {
-                this.close()
-            }
-        })
+            clicked(this.arrow, () => this.toggle())
+        }
+        clicked(this.selected, () => this.toggle())
         this.selection.addEventListener('focus', () =>
         {
             this.focused = true
@@ -173,6 +158,18 @@ class FallDown extends Events
         }
         this.showSelection()
         this.box.style.display = 'none'
+    }
+
+    toggle()
+    {
+        if (this.showing)
+        {
+            this.close()
+        }
+        else
+        {
+            this.open()
+        }
     }
 
     optionsToFallDownOptions(options)
