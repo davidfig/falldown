@@ -584,7 +584,7 @@ class FallDown extends Events
             this.box.childNodes[index].classList.toggle(this.options.classNames.select)
             this.showSelection()
             this.setCursor(index)
-            return { changed, list: this.value, active: FallDown.active }
+            return { changed, value: this.value, falldown: this }
         }
         else
         {
@@ -602,7 +602,7 @@ class FallDown extends Events
                 }
             }
             this.showSelection()
-            return { changed: this.falldown[index].value }
+            return { changed: this.falldown[index], value: this.value, falldown: this }
         }
     }
 
@@ -649,8 +649,8 @@ class FallDown extends Events
                 index = index < 0 ? this.falldown.length + index : index
                 index = index >= this.falldown.length ? index - this.falldown.length : index
             }
-            this.select(index)
             this.box.childNodes[index].scrollIntoView()
+            this.emit('select', this.select(index))
         }
     }
 
@@ -759,8 +759,8 @@ class FallDown extends Events
  * @event FallDown#select
  * @type {object}
  * @property {FallDownElement} changed
- * @property {*} list - array of values (for option.multiple) or value of selected item
- * @property {FallDown} active - FallDown element
+ * @property {*} value - array of values (for option.multiple) or value of selected item
+ * @property {FallDown} falldown - FallDown element
  */
 
 module.exports = FallDown
