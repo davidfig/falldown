@@ -57,15 +57,15 @@ class FallDown extends Events
             document.body.addEventListener('touchstart', FallDown.cancel)
             FallDown.setup = true
         }
-        if (options.addCSS)
-        {
-            this.addStyles(options)
-        }
         /**
          * Main element
          * @type HTMLElement
          */
         this.element = options.element || document.createElement('div')
+        if (options.addCSS || this.element.getAttribute('data-add-css'))
+        {
+            this.addStyles(options)
+        }
         this.options = options
         this.setupOptions()
         this.element.classList.add(options.classNames.main)
@@ -118,18 +118,40 @@ class FallDown extends Events
         clicked(this.label, () => {
             if (!this.showing)
             {
-                this.selection.focus()
+                this.open()
+            }
+            else
+            {
+                this.close()
             }
         })
-        clicked(this.selection, () =>
+        clicked(this.selected, () =>
         {
             if (!this.showing)
             {
                 this.open()
             }
+            else
+            {
+                this.close()
+            }
         })
-        this.selection.addEventListener('focus', () => this.open())
-        this.selection.addEventListener('blur', () => this.close())
+        this.selection.addEventListener('focus', () =>
+        {
+            this.focused = true
+            this.selection.classList.add(this.options.classNames.focus)
+            FallDown.active = this
+        })
+        this.selection.addEventListener('blur', () =>
+        {
+            this.focused = false
+            this.close()
+            this.selection.classList.remove(this.options.classNames.focus)
+            if (FallDown.active === this)
+            {
+                FallDown.active = null
+            }
+        })
         this.box.style.display = 'block'
         if (this.options.minSize === 'longest')
         {
@@ -239,7 +261,7 @@ class FallDown extends Events
         options.selected = options.selected || element.getAttribute('data-selected') || ''
         const dataOptions = element.getAttribute('data-options')
         options.options = options.options || (dataOptions ? dataOptions.split(options.separatorOptions || ',') : [])
-        options.label = options.label || element.getAttribute('data-label')
+        options.label = options.label || element.getAttribute('data-label') || ''
         options.multiple = options.multiple || element.getAttribute('data-multiple')
         options.multipleName = options.multipleName || element.getAttribute('data-multiple-name')
         options.arrow = typeof options.arrow === 'undefined' ? { up: '&#9652', down: '&#9662;' } : options.arrows
@@ -303,7 +325,6 @@ class FallDown extends Events
         if (!this.showing)
         {
             this.box.style.display = 'block'
-            this.selection.classList.add(this.options.classNames.focus)
             if (this.options.arrow)
             {
                 this.arrow.innerHTML = this.options.arrow.up
@@ -385,7 +406,6 @@ class FallDown extends Events
             {
                 this.arrow.innerHTML = this.options.arrow.down
             }
-            FallDown.active = null
             this.showing = false
         }
     }
@@ -651,27 +671,48 @@ class FallDown extends Events
             switch (e.key)
             {
                 case 'ArrowDown':
-                    active.selectDelta(1, 0)
+                    if (!active.showing)
+                    {
+                        active.open()
+                    }
+                    else
+                    {
+                        active.selectDelta(1, 0)
+                    }
                     e.preventDefault()
                     break
 
                 case 'ArrowUp':
-                    active.selectDelta(-1, active.box.childNodes.length - 1)
+                    if (!active.showing)
+                    {
+                        active.open()
+                    }
+                    else
+                    {
+                        active.selectDelta(-1, active.box.childNodes.length - 1)
+                    }
                     e.preventDefault()
                     break
 
                 case 'Space': case 'Enter': case ' ':
-                    if (active.options.multiple)
+                    if (!active.showing)
                     {
-                        active.emit('select', active.select(active.cursor))
-                        if (!active.options.multiple)
-                        {
-                            active.close()
-                        }
+                        active.open()
                     }
                     else
                     {
-                        active.close()
+                        if (active.options.multiple)
+                        {
+                            active.emit('select', active.select(active.cursor))
+                            if (!active.options.multiple)
+                            {
+                                active.close()
+                            }
+                        }
+                        else
+                        {
+                            active.close()
+                        }
                     }
                     e.preventDefault()
                     break
