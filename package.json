@@ -1,6 +1,6 @@
 {
   "name": "falldown",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "a vanilla javascript dropdown box replacement without required external stylesheet",
   "main": "dist/falldown.min.js",
   "repository": "https://github.com/davidfig/falldown",
