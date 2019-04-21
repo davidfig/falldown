@@ -457,7 +457,7 @@ class FallDown extends Events
      */
     force(input)
     {
-        if (this.data.multiple)
+        if (this.options.multiple)
         {
             for (let i = 0; i < this.falldown.length; i++)
             {
