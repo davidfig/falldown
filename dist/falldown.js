@@ -13,11 +13,12 @@ class FallDown extends Events
      * @param {string} [options.separatorOptions=","] separator used to split attribute data-options from options.element
      * @param {(string|string[]|FallDownElement[]|FallDownElement)} [options.selected=''] default value (may also be in the form of "item1,item2,item3" where ","=options.separatorOptions)
      * @param {string} [options.label] label for FallDown box
+     * @param {string} [options.size] set this to force the editbox to have a certain size regardless of content--this size does not include the arrow size, if any (e.g., '5rem')
      * @param {string} [options.minSize=longest] longest=size to largest option; otherwise use this as minWidth (e.g., '5rem')
      * @param {boolean} [options.allowEdit] can type entry
      * @param {string} [options.multipleName] when set and more than 1 item is selected then text changes to "n items" where n is the number selected and items=multipleName
      * @param {string} [options.multipleSeparator=", "] when showing multiple options on the selector, use this to separate the options
-     * @param {(object|boolean)} [options.arrow] change open and close arrows; set to false to remove
+     * @param {(object|boolean)} [options.arrow=true] change open and close arrows; set to false to remove
      * @param {string} [options.arrow.up=&#9652;]
      * @param {string} [options.arrow.down=&#9662;]
      * @param {boolean} [options.addCSS] append styles directly to DOM instead of using stylesheet
@@ -138,7 +139,12 @@ class FallDown extends Events
             }
         })
         this.box.style.display = 'block'
-        if (this.options.minSize === 'longest')
+        if (this.options.size)
+        {
+            this.selected.style.width = this.options.size
+            this.selected.style.overflow = 'hidden'
+        }
+        else if (this.options.minSize === 'longest')
         {
             let longest = 0
             for (let i = 0; i < this.box.childNodes.length; i++)
