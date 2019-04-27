@@ -103,6 +103,7 @@ class FallDown extends Events
         {
             clicked(elements[i], () =>
             {
+                this.cursorActive = false
                 this.emit('select', this.select(i))
                 if (this.options.multiple)
                 {
@@ -416,18 +417,21 @@ class FallDown extends Events
 
     setCursor(i)
     {
-        this.clearCursor()
-        if (i === this.box.childNodes.length)
+        if (this.cursorActive)
         {
-            i = 0
+            this.clearCursor()
+            if (i === this.box.childNodes.length)
+            {
+                i = 0
+            }
+            else if (i === -1)
+            {
+                i = this.box.childNodes.length - 1
+            }
+            this.cursor = i
+            this.box.childNodes[this.cursor].classList.add(this.options.classNames.cursor)
+            this.scrollIntoBoxView(this.box.childNodes[this.cursor])
         }
-        else if (i === -1)
-        {
-            i = this.box.childNodes.length - 1
-        }
-        this.cursor = i
-        this.box.childNodes[this.cursor].classList.add(this.options.classNames.cursor)
-        this.scrollIntoBoxView(this.box.childNodes[this.cursor])
     }
 
     // TODO: does not work properly when scrolling up :(
@@ -675,6 +679,7 @@ class FallDown extends Events
             switch (e.key)
             {
                 case 'ArrowDown':
+                    active.cursorActive = true
                     if (!active.showing)
                     {
                         active.open()
@@ -687,6 +692,7 @@ class FallDown extends Events
                     break
 
                 case 'ArrowUp':
+                    active.cursorActive = true
                     if (!active.showing)
                     {
                         active.open()
@@ -699,6 +705,7 @@ class FallDown extends Events
                     break
 
                 case 'Space': case 'Enter': case ' ':
+                    active.cursorActive = true
                     if (!active.showing)
                     {
                         active.open()
@@ -722,6 +729,7 @@ class FallDown extends Events
                     break
 
                 case 'Escape':
+                    active.cursorActive = false
                     active.close()
                     e.preventDefault()
                     break
