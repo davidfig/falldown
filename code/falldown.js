@@ -55,7 +55,6 @@ class FallDown extends Events
             window.addEventListener('resize', FallDown.resize)
             window.addEventListener('scroll', FallDown.resize)
             window.addEventListener('keydown', FallDown.keydown)
-            document.body.addEventListener('touchstart', FallDown.cancel)
             FallDown.setup = true
         }
         /**
@@ -71,7 +70,7 @@ class FallDown extends Events
         this.setupOptions()
         this.element.classList.add(options.classNames.main)
         let s = `<div class="${options.classNames.label}">${options.label}</div>` +
-            `<div class="${options.classNames.selection}">` +
+            `<div class="${options.classNames.selection}" tabindex="0">` +
             `<div class="${options.classNames.selected}"></div>` +
             (options.arrow ? `<div class="${options.classNames.arrow}">${options.arrow.down}</div>` : '') +
             `<div class="${options.classNames.box}">`
@@ -336,6 +335,7 @@ class FallDown extends Events
             FallDown.active = this
             this.cursor = null
             this.showing = true
+            this.selection.focus()
         }
     }
 
