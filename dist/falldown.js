@@ -53,7 +53,7 @@ class FallDown extends Events
         if (!FallDown.setup)
         {
             window.addEventListener('resize', FallDown.resize)
-            window.addEventListener('scroll', FallDown.resize)
+            // window.addEventListener('scroll', FallDown.resize)
             window.addEventListener('keydown', FallDown.keydown)
             FallDown.setup = true
         }

@@ -3,10 +3,6 @@
     display: flex;
 }
 
-.falldown-main:focus
-{
-}
-
 .falldown-label, .falldown-selection
 {
     cursor: pointer;
@@ -29,6 +25,7 @@
     white-space: nowrap;
     z-index: 2;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .falldown-select
@@ -50,7 +47,7 @@
     cursor: pointer;
 }
 
-.falldown-option:hover, .falldown-cursor
+.falldown-cursor
 {
     background: rgba(0,0,0,0.5);
     color: white;
