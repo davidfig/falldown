@@ -13,6 +13,11 @@
     margin-right: 0.5em;
 }
 
+.falldown-label:empty
+{
+    margin: 0;
+}
+
 .falldown-box
 {
     position: absolute;
