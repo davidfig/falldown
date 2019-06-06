@@ -62,13 +62,20 @@ class FallDown extends Events
          * Main element
          * @type HTMLElement
          */
-        if (options.element && typeof options.element === 'string')
+        if (options.element)
         {
-            this.element = document.querySelector(options.element)
-            if (!this.element)
+            if (typeof options.element === 'string')
             {
-                console.warn(`Falldown could not find document.querySelector(${options.element})`)
-                return
+                this.element = document.querySelector(options.element)
+                if (!this.element)
+                {
+                    console.warn(`Falldown could not find document.querySelector(${options.element})`)
+                    return
+                }
+            }
+            else
+            {
+                this.element = options.element
             }
         }
         else
@@ -813,7 +820,7 @@ function demo()
 
     /** begin-test */
     new FallDown({
-        parent: document.querySelector('.demo-2'),
+        element: '.demo-2',
         label: 'Single selection with styles:',
         options: [
             'options 1',
@@ -846,7 +853,7 @@ function demo()
 
     /** begin-test */
     new FallDown({
-        parent: document.querySelector('.demo-3'),
+        element: document.querySelector('.demo-3'),
         label: 'Single selection with stylesheet:',
         options: [
             'options 1',

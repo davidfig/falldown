@@ -19,7 +19,7 @@ function demo()
 
     /** begin-test */
     new FallDown({
-        parent: document.querySelector('.demo-2'),
+        element: '.demo-2',
         label: 'Single selection with styles:',
         options: [
             'options 1',
@@ -52,7 +52,7 @@ function demo()
 
     /** begin-test */
     new FallDown({
-        parent: document.querySelector('.demo-3'),
+        element: document.querySelector('.demo-3'),
         label: 'Single selection with stylesheet:',
         options: [
             'options 1',
