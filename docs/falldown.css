@@ -52,6 +52,11 @@
     cursor: pointer;
 }
 
+.falldown-option:hover
+{
+    background: rgba(0,0,0,0.25);
+}
+
 .falldown-cursor
 {
     background: rgba(0,0,0,0.5);

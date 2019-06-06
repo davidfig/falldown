@@ -53,7 +53,7 @@ function demo()
     /** begin-test */
     new FallDown({
         element: document.querySelector('.demo-3'),
-        label: 'Single selection with stylesheet:',
+        label: 'Single selection with stylesheet',
         options: [
             'options 1',
             'options 2',

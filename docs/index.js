@@ -796,7 +796,7 @@ class FallDown extends Events
 
 module.exports = FallDown
 },{"./styles.json":2,"clicked":4,"eventemitter3":5}],2:[function(require,module,exports){
-module.exports={".falldown-main":{"display":"flex"},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-label:empty":{"margin":"0"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto","-webkit-overflow-scrolling":"touch"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"0.5rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block","white-space":"nowrap"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
+module.exports={".falldown-main":{"display":"flex"},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-label:empty":{"margin":"0"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto","-webkit-overflow-scrolling":"touch"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"0.5rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.25)"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block","white-space":"nowrap"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
 
 },{}],3:[function(require,module,exports){
 const FallDown = require('../code/falldown')
@@ -854,7 +854,7 @@ function demo()
     /** begin-test */
     new FallDown({
         element: document.querySelector('.demo-3'),
-        label: 'Single selection with stylesheet:',
+        label: 'Single selection with stylesheet',
         options: [
             'options 1',
             'options 2',
@@ -930,15 +930,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * }
  *
  * const div = document.getElementById('clickme')
- * const c = clicked(div, handleClick, {thresshold: 15})
+ * const c = clicked(div, handleClick, { thresshold: 15 })
+ *
+ * // using built-in querySelector
+ * const c2 = clicked('#clickme', handleClick)
  *
  * // change callback
  * c.callback = () => console.log('different clicker')
  *
+ * // destroy
+ * c.destroy()
  */
 
 /**
- * @param {HTMLElement} element
+ * @param {HTMLElement|string} element or querySelector entry (e.g., #id-name or .class-name)
  * @param {function} callback called after click: callback(event, options.args)
  * @param {object} [options]
  * @param {number} [options.thresshold=10] if touch moves threshhold-pixels then the touch-click is cancelled
@@ -956,6 +961,13 @@ var Clicked = function () {
 
         _classCallCheck(this, Clicked);
 
+        if (typeof element === 'string') {
+            element = document.querySelector(element);
+            if (!element) {
+                console.warn('Unknown element: document.querySelector(' + element + ') in clicked()');
+                return;
+            }
+        }
         this.options = options || {};
         this.threshhold = this.options.thresshold || 10;
         this.events = {
