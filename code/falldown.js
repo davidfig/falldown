@@ -7,7 +7,7 @@ class FallDown extends Events
 {
     /**
      * @param {object} options
-     * @param {HTMLElement} [options.element] use preexisting element for FallDown with optional data in attributes (provide either options.element or options.parent)
+     * @param {(HTMLElement|string)} [options.element] use preexisting element for FallDown with optional data in attributes (provide either options.element or options.parent)
      * @param {HTMLElement} [options.parent] use thsi parent to create the FallDown (provide either options.element or options.parent)
      * @param {string[]|FallDownElement[]} [options.options] list of values for FallDown box
      * @param {string} [options.separatorOptions=","] separator used to split attribute data-options from options.element
@@ -47,7 +47,7 @@ class FallDown extends Events
      * @param {string} [options.classNames.focus=falldown-focus]
      * @fires select
      */
-    constructor(options)
+    constructor(options = {})
     {
         super()
         if (!FallDown.setup)
@@ -61,7 +61,19 @@ class FallDown extends Events
          * Main element
          * @type HTMLElement
          */
-        this.element = options.element || document.createElement('div')
+        if (options.element && typeof this.element === 'string')
+        {
+            this.element = document.querySelector(options.element)
+            if (!this.element)
+            {
+                console.warn(`Falldown could not find document.querySelector(${options.element})`)
+                return
+            }
+        }
+        else
+        {
+            this.element = document.createElement('div')
+        }
         if (options.addCSS || this.element.getAttribute('data-add-css'))
         {
             this.addStyles(options)
