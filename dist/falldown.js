@@ -61,7 +61,7 @@ class FallDown extends Events
          * Main element
          * @type HTMLElement
          */
-        if (options.element && typeof this.element === 'string')
+        if (options.element && typeof options.element === 'string')
         {
             this.element = document.querySelector(options.element)
             if (!this.element)
