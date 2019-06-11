@@ -100,7 +100,6 @@ class FallDown extends Events
         }
         s += '</div></div>'
         this.element.innerHTML = s
-
         /**
          * Whether dropdown box is showing
          * @type boolean
@@ -366,29 +365,6 @@ class FallDown extends Events
         let box = this.box.getBoundingClientRect()
         const selection = this.selected.getBoundingClientRect()
         this.box.style.maxHeight = 'unset'
-        if (selection.left >= width / 2)
-        {
-            this.box.style.right = 0
-            this.box.style.left = 'unset'
-            box = this.box.getBoundingClientRect()
-            if (box.left < 0)
-            {
-                this.box.style.right = box.left + 'px'
-                this.box.style.left = 'unset'
-            }
-        }
-        else
-        {
-            this.box.style.left = 0
-            this.box.style.right = 'unset'
-            box = this.box.getBoundingClientRect()
-            if (box.right >= width)
-            {
-                this.box.style.left = width - box.right + 'px'
-                this.box.style.right = 'unset'
-            }
-        }
-
         if (selection.top + selection.height / 2 > height / 2)
         {
             this.box.style.bottom = this.selection.offsetHeight + 'px'
@@ -411,6 +387,28 @@ class FallDown extends Events
                 const style = window.getComputedStyle(this.box)
                 const spacing = parseFloat(style.marginTop) + parseFloat(style.marginBottom) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth)
                 this.box.style.maxHeight = height - box.top - spacing + 'px'
+            }
+        }
+        if (selection.left >= width / 2)
+        {
+            this.box.style.right = 0
+            this.box.style.left = 'unset'
+            box = this.box.getBoundingClientRect()
+            if (box.left < 0)
+            {
+                this.box.style.right = box.left + 'px'
+                this.box.style.left = 'unset'
+            }
+        }
+        else
+        {
+            this.box.style.left = 0
+            this.box.style.right = 'unset'
+            box = this.box.getBoundingClientRect()
+            if (box.right >= width)
+            {
+                this.box.style.left = width - box.right + 'px'
+                this.box.style.right = 'unset'
             }
         }
     }
@@ -722,7 +720,9 @@ class FallDown extends Events
                     e.preventDefault()
                     break
 
-                case 'Space': case 'Enter': case ' ':
+                case 'Space':
+                case 'Enter':
+                case ' ':
                     active.cursorActive = true
                     if (!active.showing)
                     {
@@ -759,7 +759,7 @@ class FallDown extends Events
      * load falldown on all elements with the proper className
      * @param {string} className=falldown type convert
      */
-    static load(className='falldown')
+    static load(className = 'falldown')
     {
         const divs = document.querySelectorAll('.' + className)
         for (let i = 0; i < divs.length; i++)
