@@ -1,29 +1,25 @@
-.falldown-main
-{
+.falldown-main {
     display: flex;
 }
 
-.falldown-label, .falldown-selection
-{
+.falldown-label,
+.falldown-selection {
     cursor: pointer;
 }
 
-.falldown-label
-{
+.falldown-label {
     margin-right: 0.5em;
 }
 
-.falldown-label:empty
-{
+.falldown-label:empty {
     margin: 0;
 }
 
-.falldown-box
-{
+.falldown-box {
     position: absolute;
     border: 1px solid black;
     background: white;
-    box-shadow: 0 0 0.25rem rgba(0,0,0,0.25);
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
     padding: 1rem;
     display: none;
     width: fit-content;
@@ -33,55 +29,46 @@
     -webkit-overflow-scrolling: touch;
 }
 
-.falldown-select
-{
+.falldown-select {
     color: white;
     background: black;
 }
 
-.falldown-arrow
-{
+.falldown-arrow {
     margin-left: 0.5rem;
     display: inline-block;
     user-select: none;
     align-self: center;
 }
 
-.falldown-option
-{
+.falldown-option {
     cursor: pointer;
 }
 
-.falldown-option:hover
-{
-    background: rgba(0,0,0,0.25);
+.falldown-option:hover {
+    background: rgba(0, 0, 0, 0.25);
 }
 
-.falldown-cursor
-{
-    background: rgba(0,0,0,0.5);
+.falldown-cursor {
+    background: rgba(0, 0, 0, 0.5);
     color: white;
 }
 
-.falldown-selected
-{
+.falldown-selected {
     display: inline-block;
     white-space: nowrap;
 }
 
-.falldown-selection
-{
+.falldown-selection {
     border: 1px dotted black;
     position: relative;
     display: flex;
 }
 
-.falldown-selection:focus
-{
+.falldown-selection:focus {
     outline: none;
 }
 
-.falldown-focus
-{
+.falldown-focus {
     border: 1px solid black;
 }

@@ -146,16 +146,7 @@ class FallDown extends Events
             this.selection.classList.add(this.options.classNames.focus)
             FallDown.active = this
         })
-        this.selection.addEventListener('blur', () =>
-        {
-            this.focused = false
-            this.close()
-            this.selection.classList.remove(this.options.classNames.focus)
-            if (FallDown.active === this)
-            {
-                FallDown.active = null
-            }
-        })
+        this.selection.addEventListener('blur', () => this.blur())
         this.box.style.display = 'block'
         if (this.options.size)
         {
@@ -182,6 +173,20 @@ class FallDown extends Events
         }
         this.showSelection()
         this.box.style.display = 'none'
+    }
+
+    blur()
+    {
+        if (this.showing)
+        {
+            this.focused = false
+            this.close()
+            this.selection.classList.remove(this.options.classNames.focus)
+            if (FallDown.active === this)
+            {
+                FallDown.active = null
+            }
+        }
     }
 
     toggle()
@@ -389,6 +394,7 @@ class FallDown extends Events
                 this.box.style.maxHeight = height - box.top - spacing + 'px'
             }
         }
+        this.box.style.width = 'fit-content'
         if (selection.left >= width / 2)
         {
             this.box.style.right = 0
@@ -410,6 +416,14 @@ class FallDown extends Events
                 this.box.style.left = width - box.right + 'px'
                 this.box.style.right = 'unset'
             }
+        }
+        const lastCheck = this.box.getBoundingClientRect()
+        if (lastCheck.left < 0 || lastCheck.right > window.innerWidth)
+        {
+            const check = this.element.getBoundingClientRect()
+            this.box.style.width = 'calc(100vw - 2rem - 4px)'
+            this.box.style.left = -check.left + 'px'
+            this.box.style.right = 'auto'
         }
     }
 

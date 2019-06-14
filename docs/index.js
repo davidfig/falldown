@@ -147,16 +147,7 @@ class FallDown extends Events
             this.selection.classList.add(this.options.classNames.focus)
             FallDown.active = this
         })
-        this.selection.addEventListener('blur', () =>
-        {
-            this.focused = false
-            this.close()
-            this.selection.classList.remove(this.options.classNames.focus)
-            if (FallDown.active === this)
-            {
-                FallDown.active = null
-            }
-        })
+        this.selection.addEventListener('blur', () => this.blur())
         this.box.style.display = 'block'
         if (this.options.size)
         {
@@ -183,6 +174,20 @@ class FallDown extends Events
         }
         this.showSelection()
         this.box.style.display = 'none'
+    }
+
+    blur()
+    {
+        if (this.showing)
+        {
+            this.focused = false
+            this.close()
+            this.selection.classList.remove(this.options.classNames.focus)
+            if (FallDown.active === this)
+            {
+                FallDown.active = null
+            }
+        }
     }
 
     toggle()
@@ -390,6 +395,7 @@ class FallDown extends Events
                 this.box.style.maxHeight = height - box.top - spacing + 'px'
             }
         }
+        this.box.style.width = 'fit-content'
         if (selection.left >= width / 2)
         {
             this.box.style.right = 0
@@ -411,6 +417,14 @@ class FallDown extends Events
                 this.box.style.left = width - box.right + 'px'
                 this.box.style.right = 'unset'
             }
+        }
+        const lastCheck = this.box.getBoundingClientRect()
+        if (lastCheck.left < 0 || lastCheck.right > window.innerWidth)
+        {
+            const check = this.element.getBoundingClientRect()
+            this.box.style.width = 'calc(100vw - 2rem - 4px)'
+            this.box.style.left = -check.left + 'px'
+            this.box.style.right = 'auto'
         }
     }
 
@@ -796,7 +810,7 @@ class FallDown extends Events
 
 module.exports = FallDown
 },{"./styles.json":2,"clicked":4,"eventemitter3":5}],2:[function(require,module,exports){
-module.exports={".falldown-main":{"display":"flex"},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-label:empty":{"margin":"0"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0,0,0,0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto","-webkit-overflow-scrolling":"touch"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"0.5rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0,0,0,0.25)"},".falldown-cursor":{"background":"rgba(0,0,0,0.5)","color":"white"},".falldown-selected":{"display":"inline-block","white-space":"nowrap"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
+module.exports={".falldown-main":{"display":"flex"},".falldown-label":{"cursor":"pointer","margin-right":"0.5em"},".falldown-selection":{"cursor":"pointer","border":"1px dotted black","position":"relative","display":"flex"},".falldown-label:empty":{"margin":"0"},".falldown-box":{"position":"absolute","border":"1px solid black","background":"white","box-shadow":"0 0 0.25rem rgba(0, 0, 0, 0.25)","padding":"1rem","display":"none","width":"fit-content","white-space":"nowrap","z-index":"2","overflow":"auto","-webkit-overflow-scrolling":"touch"},".falldown-select":{"color":"white","background":"black"},".falldown-arrow":{"margin-left":"0.5rem","display":"inline-block","user-select":"none","align-self":"center"},".falldown-option":{"cursor":"pointer"},".falldown-option:hover":{"background":"rgba(0, 0, 0, 0.25)"},".falldown-cursor":{"background":"rgba(0, 0, 0, 0.5)","color":"white"},".falldown-selected":{"display":"inline-block","white-space":"nowrap"},".falldown-selection:focus":{"outline":"none"},".falldown-focus":{"border":"1px solid black"}}
 
 },{}],3:[function(require,module,exports){
 const FallDown = require('../code/falldown')
