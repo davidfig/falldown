@@ -40,7 +40,7 @@
     <div class="title">Demo for <a href="https://github.com/davidfig/falldown" title="github: falldown">falldown</a>: a vanilla javascript dropbox box replacement with no required external stylesheet</div>
     <table>
         <tr><th>Demo</th><th>Souce Code</th></tr>
-<tr><td class="demo demo-1"></td><td class="code"><pre>    new FallDown({
+<tr><td class="demo demo-1"></td><td class="code"><pre>   new FallDown({
         parent: document.querySelector('.demo-1'),
         label: 'Single selection:',
         options: [
@@ -52,7 +52,7 @@
         addCSS: true,
         addCSSClassName: 'demo-1'
     });
-   </pre></td></tr><tr><td class="demo demo-2"></td><td class="code"><pre>    new FallDown({
+   </pre></td></tr><tr><td class="demo demo-2"></td><td class="code"><pre>   new FallDown({
         element: '.demo-2',
         label: 'Single selection with styles:',
         options: [
@@ -82,7 +82,7 @@
         addCSS: true,
         addCSSClassName: 'demo-2'
     });
-   </pre></td></tr><tr><td class="demo demo-3"></td><td class="code"><pre>    new FallDown({
+   </pre></td></tr><tr><td class="demo demo-3"></td><td class="code"><pre>   new FallDown({
         element: document.querySelector('.demo-3'),
         label: 'Single selection with stylesheet',
         options: [
@@ -94,7 +94,7 @@
         ],
         selected: 'options 1'
     });
-   </pre></td></tr><tr><td class="demo demo-4"></td><td class="code"><pre>    document.querySelector('.demo-4').innerHTML = `
+   </pre></td></tr><tr><td class="demo demo-4"></td><td class="code"><pre>   document.querySelector('.demo-4').innerHTML = `
         &lt;div class=&quot;falldown&quot;
             data-options=&quot;apple,pear,grapes,pineapple&quot;
             data-selected=&quot;pineapple&quot;
@@ -103,7 +103,7 @@
         &lt;/div&gt;
     `;
     FallDown.load();
-   </pre></td></tr><tr><td class="demo demo-5"></td><td class="code"><pre>    const options = []
+   </pre></td></tr><tr><td class="demo demo-5"></td><td class="code"><pre>   const options = []
     for (let i = 0; i &lt; 30; i++)
     {
         options.push('lots of options ' + i)
@@ -116,7 +116,7 @@
         multiple: 'name',
         multipleName: ' opts'
     });
-   </pre></td></tr><tr><td class="demo demo-6"></td><td class="code"><pre>    new FallDown({
+   </pre></td></tr><tr><td class="demo demo-6"></td><td class="code"><pre>   new FallDown({
         parent: document.querySelector('.demo-6'),
         label: 'No arrow, single selection:',
         options: [

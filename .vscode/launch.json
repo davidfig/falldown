@@ -8,15 +8,13 @@
             "type": "node",
             "request": "launch",
             "name": "Styles for Falldown",
-            "program": "${workspaceFolder}/generate/styles.js",
-            "useWSL": true
+            "program": "${workspaceFolder}/generate/styles.js"
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Table for Demo",
-            "program": "${workspaceFolder}/docs/generate.js",
-            "useWSL": true
+            "program": "${workspaceFolder}/docs/generate.js"
         }
     ]
 }

@@ -1,9 +1,9 @@
-const clicked = require('clicked')
-const Events = require('eventemitter3')
+import { clicked } from 'clicked'
+import Events from 'eventemitter3'
 
-const STYLES = require('./styles.json')
+import STYLES from './styles.json'
 
-class FallDown extends Events
+export class FallDown extends Events
 {
     /**
      * @param {object} options
@@ -134,12 +134,12 @@ class FallDown extends Events
         }
         this.cursor = null
         this.options = options
-        clicked(this.label, () => this.toggle())
+        clicked(this.label, () => this.toggle(), { clicked: false, clickDown: true })
         if (this.arrow)
         {
-            clicked(this.arrow, () => this.toggle())
+            clicked(this.arrow, () => this.toggle(), { clicked: false, clickDown: true })
         }
-        clicked(this.selected, () => this.toggle())
+        clicked(this.selected, () => this.toggle(), { clicked: false, clickDown: true })
         this.selection.addEventListener('focus', () =>
         {
             this.focused = true
@@ -806,5 +806,3 @@ class FallDown extends Events
  * @property {*} value - array of values (for option.multiple) or value of selected item
  * @property {FallDown} falldown - FallDown element
  */
-
-module.exports = FallDown

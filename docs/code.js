@@ -1,4 +1,4 @@
-const FallDown = require('../code/falldown')
+import { FallDown } from '../code/falldown'
 
 function demo()
 {
