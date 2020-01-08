@@ -5,7 +5,7 @@ Features include single or multiple drop-down box. Fully control styling using c
 
 ## Simple Example
 ```js
-const FallDown = require('falldown');
+import { FallDown } from 'falldown'
 
 const falldown = new FallDown({
     parent: document.body,
@@ -19,8 +19,8 @@ const falldown = new FallDown({
     ],
     addCSS: true,
     selected: 'black'
-});
-console.log(falldown.value);
+})
+falldown.on('select', value => console.log(value))
 ```
 
 ## Live Example
