@@ -1,5 +1,5 @@
 {
-    "applicationName": "falldown",
+    "applicationName": "FallDown",
     "disqus": "",
     "openGraph": {
         "title": "",
@@ -9,7 +9,7 @@
         "url": ""
     },
     "meta": {
-        "title": "falldown",
+        "title": "FallDown",
         "description": "",
         "keyword": ""
     },
@@ -40,12 +40,12 @@
         "default": {
             "outputSourceFiles": true
         },
-        "applicationName": "falldown",
+        "applicationName": "FallDown",
         "footer"        : "by YOPEY YOPEY LLC (yopeyopey.com)",
-        "copyright"     : "Copyright © 2019 YOPEY YOPEY LLC.",
+        "copyright"     : "Copyright © 2020 YOPEY YOPEY LLC.",
         "meta": {
-            "title": "falldown API Documentation",
-            "description": "Documentation for pixi-falldown library",
+            "title": "FallDown API Documentation",
+            "description": "Documentation for falldown library",
             "keyword": "docs, documentation, html5, javascript, jsdoc, drop-down, combo box, options, select, datalist"
         }
     }

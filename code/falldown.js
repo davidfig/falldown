@@ -3,7 +3,7 @@ import Events from 'eventemitter3'
 
 import STYLES from './styles.json'
 
-export class FallDown extends Events
+class FallDown extends Events
 {
     /**
      * @param {object} options
@@ -53,7 +53,6 @@ export class FallDown extends Events
         if (!FallDown.setup)
         {
             window.addEventListener('resize', FallDown.resize)
-            // window.addEventListener('scroll', FallDown.resize)
             window.addEventListener('keydown', FallDown.keydown)
             FallDown.setup = true
         }
@@ -189,6 +188,7 @@ export class FallDown extends Events
         }
     }
 
+    /** toggle the falldown box open or closed */
     toggle()
     {
         if (this.showing)
@@ -806,3 +806,5 @@ export class FallDown extends Events
  * @property {*} value - array of values (for option.multiple) or value of selected item
  * @property {FallDown} falldown - FallDown element
  */
+
+ export { FallDown }

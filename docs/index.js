@@ -742,7 +742,6 @@
             if (!FallDown.setup)
             {
                 window.addEventListener('resize', FallDown.resize);
-                // window.addEventListener('scroll', FallDown.resize)
                 window.addEventListener('keydown', FallDown.keydown);
                 FallDown.setup = true;
             }
@@ -878,6 +877,7 @@
             }
         }
 
+        /** toggle the falldown box open or closed */
         toggle()
         {
             if (this.showing)
@@ -1480,21 +1480,6 @@
             }
         }
     }
-
-    /**
-     * @typedef {Object} FallDown#FallDownElement
-     * @property {*} value
-     * @property {string} html to display
-     */
-
-    /**
-     * fires when the selection of the falldown changes
-     * @event FallDown#select
-     * @type {object}
-     * @property {FallDownElement} changed
-     * @property {*} value - array of values (for option.multiple) or value of selected item
-     * @property {FallDown} falldown - FallDown element
-     */
 
     function demo()
     {

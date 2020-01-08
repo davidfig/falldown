@@ -19,7 +19,7 @@
     "demo-build": "rollup -c rollup.demo.js",
     "demo-css": "cp css/falldown.css docs/",
     "demo": "yarn demo-css && yarn demo-index && yarn demo-build",
-    "docs": "jsdoc -c .jsdoc.json",
+    "docs": "jsdoc -c docs/.jsdoc.json",
     "prepublishOnly": "yarn build && yarn demo && yarn docs",
     "upgrade": "yarn upgrade-interactive --latest"
   },
