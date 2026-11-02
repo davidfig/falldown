@@ -12,11 +12,11 @@
   "author": "David Figatner <david@yopeyopey.com>",
   "license": "MIT",
   "scripts": {
-    "start": "rollup -c docs/rollup.config.js",
+    "start": "rollup --bundleConfigAsCjs -c docs/rollup.config.js",
     "build-styles": "node generate/styles.js && cp code/styles.json dist/",
-    "build": "yarn build-styles && rollup -c rollup.config.js",
+    "build": "yarn build-styles && rollup --bundleConfigAsCjs -c rollup.config.js",
     "demo-index": "node docs/generate.js",
-    "demo-build": "rollup -c rollup.demo.js",
+    "demo-build": "rollup --bundleConfigAsCjs -c rollup.demo.js",
     "demo-css": "cp css/falldown.css docs/",
     "demo": "yarn demo-css && yarn demo-index && yarn demo-build",
     "docs": "jsdoc -c docs/.jsdoc.json",
@@ -24,19 +24,18 @@
     "upgrade": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
-    "clicked": "^3.1.0",
-    "eventemitter3": "^3.1.2"
+    "clicked": "^4.0.3",
+    "eventemitter3": "^5.0.4"
   },
   "devDependencies": {
-    "@rollup/plugin-json": "^4.0.1",
-    "babel-preset-env": "^1.7.0",
-    "fs-extra": "^8.0.1",
-    "jsdoc": "^3.6.3",
-    "rollup": "^1.29.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-serve": "^1.0.1",
-    "rollup-plugin-terser": "^5.1.3",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.2",
+    "fs-extra": "^11.4.1",
+    "jsdoc": "^4.0.5",
+    "rollup": "^4.67.4",
+    "rollup-plugin-serve": "^3.0.0",
     "yy-jsdoc-template": "^1.3.0"
   },
   "private": false
